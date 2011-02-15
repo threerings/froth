@@ -29,6 +29,9 @@
       <path refid="compile.classpath"/>
       <pathelement location="${classes.dir}"/>
     </path>
+    <unzip src="lib/steamworks_sdk_112.zip" dest="${deploy.dir}" overwrite="false">
+      <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**"/>
+    </unzip>
   </target>
 
   <target name="clean" description="Cleans out build results">
@@ -52,12 +55,13 @@
     </javac>
   </target>
 
-  <target name="nativecompile" description="Builds the native code.">
+  <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
     <apply executable="g++" parallel="true">
       <arg line="-o ${deploy.dir}/lib/libfroth.so -shared"/>
       <arg line="-I${java.home}/../include"/>
       <arg line="-I${java.home}/../include/linux"/>
+      <arg line="-I${deploy.dir}/sdk/public/steam"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
   </target>

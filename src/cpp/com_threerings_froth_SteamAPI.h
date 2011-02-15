@@ -7,20 +7,29 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Inaccessible static: _haveLib */
 /*
  * Class:     com_threerings_froth_SteamAPI
- * Method:    Init
- * Signature: ()Z
+ * Method:    shutdown
+ * Signature: ()V
  */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamAPI_Init
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamAPI_shutdown
   (JNIEnv *, jclass);
 
 /*
  * Class:     com_threerings_froth_SteamAPI
- * Method:    Shutdown
- * Signature: ()V
+ * Method:    nativeInit
+ * Signature: ()Z
  */
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamAPI_Shutdown
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamAPI_nativeInit
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamAPI
+ * Method:    nativeIsSteamRunning
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamAPI_nativeIsSteamRunning
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

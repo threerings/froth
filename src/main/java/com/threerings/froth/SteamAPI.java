@@ -13,11 +13,52 @@ public class SteamAPI
      *
      * @return whether or not the API initialized successfully.
      */
-    public static native boolean Init ();
+    public static boolean init ()
+    {
+        return _haveLib && nativeInit();
+    }
+
+    /**
+     * Checks whether Steam is running.
+     */
+    public static boolean isSteamRunning ()
+    {
+        return _haveLib && nativeIsSteamRunning();
+    }
 
     /**
      * Shuts down the Steam API.
      */
-    public static native void Shutdown ();
+    public static native void shutdown ();
+
+    /**
+     * The actual native initialization method.
+     */
+    protected static native boolean nativeInit ();
+
+    /**
+     * The native running check method.
+     */
+    protected static native boolean nativeIsSteamRunning ();
+
+    /** Whether the native library was successfully loaded. */
+    protected static boolean _haveLib;
+
+    static {
+        // first try the 32-bit, then the 64-bit library
+        try {
+            System.loadLibrary("froth");
+            _haveLib = true;
+
+        } catch (UnsatisfiedLinkError e) {
+            try {
+                System.loadLibrary("froth64");
+                _haveLib = true;
+
+            } catch (UnsatisfiedLinkError e2) {
+                // no-op
+            }
+        }
+    }
 }
 
