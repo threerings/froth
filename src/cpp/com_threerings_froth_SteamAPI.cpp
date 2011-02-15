@@ -1,8 +1,9 @@
 //
 // $Id$
 
-#include <jni.h>
 #include <steam_api.h>
+
+#include "com_threerings_froth_SteamAPI.h"
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamAPI_nativeInit (
     JNIEnv* env, jclass clazz)
