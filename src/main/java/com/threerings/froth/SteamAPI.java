@@ -51,7 +51,6 @@ public class SteamAPI
             _haveLib = true;
 
         } catch (UnsatisfiedLinkError e) {
-            e.printStackTrace();
             try {
                 System.loadLibrary("froth64");
                 _haveLib = true;
