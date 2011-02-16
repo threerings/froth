@@ -57,15 +57,22 @@
 
   <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
-    <apply executable="g++" parallel="true">
-      <arg line="-o ${deploy.dir}/lib/libfroth.so -shared -lsteam_api"/>
-      <arg line="-I${java.home}/../include"/>
-      <arg line="-I${java.home}/../include/linux"/>
-      <arg line="-I${deploy.dir}/sdk/public/steam"/>
-      <arg line="-L${deploy.dir}/sdk/redistributable_bin/linux32"/>
+    <apply os="Linux" executable="g++" parallel="true">
+      <arg line="-o lib/i686-Linux/libfroth.so -shared -lsteam_api"/>
+      <arg value="-I${java.home}/../include"/>
+      <arg value="-I${java.home}/../include/linux"/>
+      <arg value="-I${deploy.dir}/sdk/public/steam"/>
+      <arg value="-L${deploy.dir}/sdk/redistributable_bin/linux32"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-    <copy file="${deploy.dir}/lib/libfroth.so" todir="lib/i686-Linux"/>
+	<apply osfamily="windows" executable="cl" parallel="true">
+      <arg line="-Felib/i686-Windows/froth.dll -LD"/>
+      <arg value="-I${java.home}/../include"/>
+      <arg value="-I${java.home}/../include/win32"/>
+      <arg value="-I${deploy.dir}/sdk/public/steam"/>
+      <arg value="${deploy.dir}/sdk/redistributable_bin/steam_api.lib"/>
+      <fileset dir="src/cpp" includes="*.cpp"/>
+    </apply>
   </target>
 
   <target name="javadoc" depends="-prepare" description="Builds the Java documentation">
