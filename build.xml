@@ -125,11 +125,11 @@
   <property name="maven.deploy.repo" value="file://${user.home}/.m2/repository"/>
   <target name="maven-deploy" depends="dist"
           description="Deploys our build artifacts to a Maven repository.">
-    <jar basedir="${src.dir}" destfile="${deploy.dir}/${ant.project.name}-sources.jar"/>
+    <jar basedir="lib" destfile="${deploy.dir}/${ant.project.name}-natives.jar" excludes="*.zip"/>
     <artifact:deploy file="${deploy.dir}/${ant.project.name}.jar" uniqueVersion="false">
       <remoteRepository url="${maven.deploy.repo}"/>
       <pom refid="pom"/>
-      <attach file="${deploy.dir}/${ant.project.name}-sources.jar" classifier="sources"/>
+      <attach file="${deploy.dir}/${ant.project.name}-natives.jar" classifier="natives"/>
     </artifact:deploy>
   </target>
 </project>

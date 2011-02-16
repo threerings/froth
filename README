@@ -1,0 +1,29 @@
+The Froth library
+-----------------
+
+Froth provides partial Java bindings for the Steam API.  The Steam SDK is proprietary, so do not
+distribute outside OOO.
+
+Building
+--------
+
+Invoke ant with any of the following targets:
+
+  all: builds the distribution files and javadoc documentation
+  compile: builds only the class files (dist/classes)
+  javadoc: builds only the javadoc documentation (dist/docs)
+  dist: builds the distribution jar files (dist/*.jar)
+  maven-deploy: deploys Maven artifacts to your local repository
+  genheaders: rebuilds JNI headers for bindings
+  nativecompile: recompiles native libraries for the current platform (Linux, OS X, Windows)
+
+Native Compilation
+------------------
+
+Linux should be straightforward; it just needs GCC.
+
+Windows requires Visual Studio C++ 2010 Express (http://www.microsoft.com/express/Downloads/) and
+the Windows SDK (http://msdn.microsoft.com/en-us/windows/bb980924).  Run Ant from the SDK command
+prompt shortcut.
+
+OS X requires Xcode.
