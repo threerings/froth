@@ -66,14 +66,14 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="windows" executable="SetEnv.cmd" parallel="true">
-	  <arg line="/x86 &amp;&amp; cl -Felib/i686-Windows/froth.dll -LD"/>
+      <arg line="/x86 &amp;&amp; cl -Felib/i686-Windows/froth.dll -LD"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/win32"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
       <arg value="${deploy.dir}/sdk/redistributable_bin/steam_api.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-	<apply osfamily="windows" executable="SetEnv.Cmd" parallel="true">
+    <apply osfamily="windows" executable="SetEnv.Cmd" parallel="true">
       <arg line="/x64 &amp;&amp; cl -Felib/i686-Windows/froth64.dll -LD"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/win32"/>
