@@ -32,6 +32,11 @@ public class SteamAPI
     public static native void shutdown ();
 
     /**
+     * Runs any callbacks from Steam.
+     */
+    public static native void runCallbacks ();
+
+    /**
      * The actual native initialization method.
      */
     protected static native boolean nativeInit ();
@@ -47,11 +52,13 @@ public class SteamAPI
     static {
         // first try the 32-bit, then the 64-bit library
         try {
+            System.loadLibrary("steam_api");
             System.loadLibrary("froth");
             _haveLib = true;
 
         } catch (UnsatisfiedLinkError e) {
             try {
+                System.loadLibrary("steam_api64");
                 System.loadLibrary("froth64");
                 _haveLib = true;
 

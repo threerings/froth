@@ -22,3 +22,8 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamAPI_nativeIsSteamRunni
     return SteamAPI_IsSteamRunning();
 }
 
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamAPI_runCallbacks
+  (JNIEnv *, jclass)
+{
+    SteamAPI_RunCallbacks();
+}

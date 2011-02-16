@@ -18,6 +18,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamAPI_shutdown
 
 /*
  * Class:     com_threerings_froth_SteamAPI
+ * Method:    runCallbacks
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamAPI_runCallbacks
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamAPI
  * Method:    nativeInit
  * Signature: ()Z
  */
