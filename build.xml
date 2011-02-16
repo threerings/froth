@@ -100,6 +100,10 @@
     <javah destdir="src/cpp">
       <classpath refid="built.classpath"/>
       <class name="com.threerings.froth.SteamAPI"/>
+      <class name="com.threerings.froth.SteamApps"/>
+      <class name="com.threerings.froth.SteamFriends"/>
+      <class name="com.threerings.froth.SteamUser"/>
+      <class name="com.threerings.froth.SteamUtils"/>
     </javah>
   </target>
 
