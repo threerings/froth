@@ -15,6 +15,22 @@ extern "C" {
 JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamUser_getSteamID
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    initiateGameConnection
+ * Signature: (Ljava/nio/ByteBuffer;JISZ)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_initiateGameConnection
+  (JNIEnv *, jclass, jobject, jlong, jint, jshort, jboolean);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    terminateGameConnection
+ * Signature: (IS)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_terminateGameConnection
+  (JNIEnv *, jclass, jint, jshort);
+
 #ifdef __cplusplus
 }
 #endif

@@ -117,6 +117,7 @@
       <class name="com.threerings.froth.SteamAPI"/>
       <class name="com.threerings.froth.SteamApps"/>
       <class name="com.threerings.froth.SteamFriends"/>
+      <class name="com.threerings.froth.SteamGameServer"/>
       <class name="com.threerings.froth.SteamUser"/>
       <class name="com.threerings.froth.SteamUtils"/>
     </javah>
