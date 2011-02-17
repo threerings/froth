@@ -125,7 +125,20 @@
   <property name="maven.deploy.repo" value="file://${user.home}/.m2/repository"/>
   <target name="maven-deploy" depends="dist"
           description="Deploys our build artifacts to a Maven repository.">
-    <jar basedir="lib" destfile="${deploy.dir}/${ant.project.name}-natives.jar" excludes="*.zip"/>
+    <copy todir="${deploy.dir}/natives">
+      <fileset dir="lib" excludes="*.zip"/>
+    </copy>
+    <copy todir="${deploy.dir}/natives/i686-Windows">
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin" includes="*.dll"/>
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/win64" includes="*.dll"/>
+    </copy>
+    <copy todir="${deploy.dir}/natives/i686-Linux">
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/linux32" includes="*.so"/>
+    </copy>
+    <copy todir="${deploy.dir}/natives/Universal-MacOS">
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx32" includes="*.dylib"/>
+    </copy>
+    <jar basedir="${deploy.dir}/natives" destfile="${deploy.dir}/${ant.project.name}-natives.jar"/>
     <artifact:deploy file="${deploy.dir}/${ant.project.name}.jar" uniqueVersion="false">
       <remoteRepository url="${maven.deploy.repo}"/>
       <pom refid="pom"/>
