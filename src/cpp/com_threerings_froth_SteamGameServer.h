@@ -7,6 +7,23 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Inaccessible static: _initialized */
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    shutdown
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_shutdown
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    runCallbacks
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_runCallbacks
+  (JNIEnv *, jclass);
+
 /*
  * Class:     com_threerings_froth_SteamGameServer
  * Method:    sendUserConnectAndAuthenticate
@@ -22,6 +39,14 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_sendUserCon
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_sendUserDisconnect
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    nativeInit
+ * Signature: (ISSSSILjava/lang/String;Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeInit
+  (JNIEnv *, jclass, jint, jshort, jshort, jshort, jshort, jint, jstring, jstring);
 
 #ifdef __cplusplus
 }

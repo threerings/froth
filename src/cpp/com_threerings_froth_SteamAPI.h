@@ -8,6 +8,7 @@
 extern "C" {
 #endif
 /* Inaccessible static: _haveLib */
+/* Inaccessible static: _initialized */
 /*
  * Class:     com_threerings_froth_SteamAPI
  * Method:    shutdown

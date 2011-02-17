@@ -15,7 +15,15 @@ public class SteamAPI
      */
     public static boolean init ()
     {
-        return _haveLib && nativeInit();
+        return (_initialized = _haveLib && nativeInit());
+    }
+
+    /**
+     * Checks whether the Steam API was successfully initialized.
+     */
+    public static boolean isInitialized ()
+    {
+        return _initialized;
     }
 
     /**
@@ -23,7 +31,7 @@ public class SteamAPI
      */
     public static boolean isSteamRunning ()
     {
-        return _haveLib && nativeIsSteamRunning();
+        return _initialized && nativeIsSteamRunning();
     }
 
     /**
@@ -48,6 +56,9 @@ public class SteamAPI
 
     /** Whether the native library was successfully loaded. */
     protected static boolean _haveLib;
+
+    /** Whether or not we have successfully initialized. */
+    protected static boolean _initialized;
 
     static {
         // first try the 32-bit, then the 64-bit library
