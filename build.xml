@@ -30,7 +30,7 @@
       <pathelement location="${classes.dir}"/>
     </path>
     <unzip src="lib/steamworks_sdk_112.zip" dest="${deploy.dir}" overwrite="false">
-      <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**"/>
+      <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
   </target>
 
@@ -140,10 +140,12 @@
       <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx32" includes="*.dylib"/>
     </copy>
     <jar basedir="${deploy.dir}/natives" destfile="${deploy.dir}/${ant.project.name}-natives.jar"/>
+    <jar basedir="${deploy.dir}/sdk/tools" destfile="${deploy.dir}/${ant.project.name}-tools.jar"/>
     <artifact:deploy file="${deploy.dir}/${ant.project.name}.jar" uniqueVersion="false">
       <remoteRepository url="${maven.deploy.repo}"/>
       <pom refid="pom"/>
       <attach file="${deploy.dir}/${ant.project.name}-natives.jar" classifier="natives"/>
+      <attach file="${deploy.dir}/${ant.project.name}-tools.jar" classifier="tools"/>
     </artifact:deploy>
   </target>
 </project>
