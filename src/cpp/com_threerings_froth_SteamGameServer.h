@@ -26,6 +26,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_runCallbacks
 
 /*
  * Class:     com_threerings_froth_SteamGameServer
+ * Method:    getSteamID
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamGameServer_getSteamID
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
  * Method:    sendUserConnectAndAuthenticate
  * Signature: (ILjava/nio/ByteBuffer;Ljava/nio/LongBuffer;)Z
  */

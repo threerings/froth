@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    getFriendCount
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_getFriendCount
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    getFriendByIndex
+ * Signature: (II)J
+ */
+JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamFriends_getFriendByIndex
+  (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    activateGameOverlayToWebPage
  * Signature: (Ljava/lang/String;)V
  */
