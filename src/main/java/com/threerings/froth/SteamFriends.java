@@ -8,6 +8,9 @@ package com.threerings.froth;
  */
 public class SteamFriends
 {
+    /** Flag for "regular" friends. */
+    public static final int FRIEND_FLAG_IMMEDIATE = 0x04;
+
     /**
      * Returns the number of friends with properties identified by the specified flags.
      */
