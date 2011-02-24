@@ -15,6 +15,23 @@ public class SteamGameServer
     public enum ServerMode {
         INVALID, NO_AUTHENTICATION, AUTHENTICATION, AUTHENTICATION_AND_SECURE };
 
+	/** Denial codes for {@link #sendUserConnectAndAuthenticate}. */
+    public enum DenyReason {
+        INVALID, INVALID_VERSION, GENERIC, NOT_LOGGED_ON, NO_LICENSE, CHEATER,
+        LOGGED_IN_ELSEWHERE, UNKNOWN_TEXT, INCOMPATIBLE_ANTICHEAT, MEMORY_CORRUPTION,
+        INCOMPATIBLE_SOFTWARE, STEAM_CONNECTION_LOST, STEAM_CONNECTION_ERROR,
+        STEAM_RESPONSE_TIMED_OUT, STEAM_VALIDATION_STALLED, STEAM_OWNER_LEFT_GUEST_USER };
+
+    /** Result codes for {@link #beginAuthSession}. */
+    public enum BeginAuthSessionResult {
+        OK, INVALID_TICKET, DUPLICATE_REQUEST, INVALID_VERSION, GAME_MISMATCH, EXPIRED_TICKET };
+
+    /** Response codes for {@link #beginAuthSession}. */
+    public enum AuthSessionResponse {
+        OK, USER_NOT_CONNECTED_TO_STEAM, NO_LICENSE_OR_EXPIRED, VAC_BANNED,
+        LOGGED_IN_ELSEWHERE, VAC_CHECK_TIMED_OUT, AUTH_TICKET_CANCELED,
+        AUTH_TICKET_INVALID_ALREADY_USED, AUTH_TICKET_INVALID };
+
     /**
      * A callback interface for parties interested in the response to
      * {@link #sendUserConnectAndAuthenticate}.
@@ -29,7 +46,7 @@ public class SteamGameServer
         /**
          * Indicates that a client's request to authenticate was denied.
          */
-        public void clientDeny (int denyReason, String optionalText);
+        public void clientDeny (DenyReason denyReason, String optionalText);
     }
 
     /**
@@ -40,7 +57,7 @@ public class SteamGameServer
         /**
          * Contains the response to a request to validate an auth ticket.
          */
-	    public void validateAuthTicketResponse (int authSessionResponse);
+	    public void validateAuthTicketResponse (AuthSessionResponse authSessionResponse);
     }
 
     /**
@@ -83,8 +100,19 @@ public class SteamGameServer
     /**
      * Requests to authenticate a user.
      */
-    public static native boolean sendUserConnectAndAuthenticate (
-        int clientIp, ByteBuffer authBlob, LongBuffer steamId, AuthenticateCallback callback);
+    public static boolean sendUserConnectAndAuthenticate (
+        int clientIp, ByteBuffer authBlob, LongBuffer steamId, final AuthenticateCallback callback)
+    {
+        return nativeSendUserConnectAndAuthenticate(
+                clientIp, authBlob, steamId, new NativeAuthenticateCallback() {
+            public void clientApprove () {
+                callback.clientApprove();
+            }
+            public void clientDeny (int denyReason, String optionalText) {
+                callback.clientDeny(DenyReason.values()[denyReason], optionalText);
+            }
+        });
+    }
 
     /**
      * Notes that the identified user has disconnected.
@@ -94,8 +122,17 @@ public class SteamGameServer
     /**
      * Attempts to begin an auth session.
      */
-    public static native int beginAuthSession (
-        ByteBuffer ticket, long steamId, AuthSessionCallback callback);
+    public static BeginAuthSessionResult beginAuthSession (
+        ByteBuffer ticket, long steamId, final AuthSessionCallback callback)
+    {
+        int result = nativeBeginAuthSession(ticket, steamId, new NativeAuthSessionCallback() {
+            public void validateAuthTicketResponse (int authSessionResponse) {
+                callback.validateAuthTicketResponse(
+                    AuthSessionResponse.values()[authSessionResponse]);
+            }
+        });
+        return BeginAuthSessionResult.values()[result];
+    }
 
     /**
      * Ends the auth session for the specified id.
@@ -108,6 +145,46 @@ public class SteamGameServer
     protected static native boolean nativeInit (
         int ip, short port, short gamePort, short spectatorPort, short queryPort,
         int serverMode, String gameDir, String versionString);
+
+    /**
+     * The actual native connect and authenticate method.
+     */
+    protected static native boolean nativeSendUserConnectAndAuthenticate (
+        int clientIp, ByteBuffer authBlob, LongBuffer steamId,
+        NativeAuthenticateCallback callback);
+
+    /**
+     * The actual native auth session begin method.
+     */
+    protected static native int nativeBeginAuthSession (
+        ByteBuffer ticket, long steamId, NativeAuthSessionCallback callback);
+
+    /**
+     * Native equivalent of {@link AuthenticateCallback}.
+     */
+    protected interface NativeAuthenticateCallback
+    {
+        /**
+         * Indicates that a client's request to authenticate was approved.
+         */
+        public void clientApprove ();
+
+        /**
+         * Indicates that a client's request to authenticate was denied.
+         */
+        public void clientDeny (int denyReason, String optionalText);
+    }
+
+    /**
+     * Native equivalent of {@link AuthSessionCallback}.
+     */
+    protected interface NativeAuthSessionCallback
+    {
+        /**
+         * Contains the response to a request to validate an auth ticket.
+         */
+	    public void validateAuthTicketResponse (int authSessionResponse);
+    }
 
     /** Whether or not we have successfully initialized. */
     protected static boolean _initialized;

@@ -55,7 +55,7 @@ protected:
     void clientApprove (GSClientApprove_t* param)
     {
         if (param->m_SteamID == _steamId) {
-            call("com/threerings/froth/SteamGameServer$AuthenticateCallback",
+            call("com/threerings/froth/SteamGameServer$NativeAuthenticateCallback",
                 "clientApprove", "()V");
             delete this;
         }
@@ -64,7 +64,7 @@ protected:
     void clientDeny (GSClientDeny_t* param)
     {
         if (param->m_SteamID == _steamId) {
-            call("com/threerings/froth/SteamGameServer$AuthenticateCallback",
+            call("com/threerings/froth/SteamGameServer$NativeAuthenticateCallback",
                 "clientDeny", "(ILjava/lang/String;)V", (jint)param->m_eDenyReason,
                 _env->NewStringUTF(param->m_rgchOptionalText));
             delete this;
@@ -89,7 +89,7 @@ protected:
     void validateAuthTicketResponse (ValidateAuthTicketResponse_t* param)
     {
         if (param->m_SteamID == _steamId) {
-            call("com/threerings/froth/SteamGameServer$AuthSessionCallback",
+            call("com/threerings/froth/SteamGameServer$NativeAuthSessionCallback",
                 "validateAuthTicketResponse", "(I)V", (jint)param->m_eAuthSessionResponse);
             delete this;
         }
@@ -125,7 +125,7 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_runCallbacks (
     SteamGameServer_RunCallbacks();
 }
 
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_sendUserConnectAndAuthenticate (
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeSendUserConnectAndAuthenticate (
     JNIEnv* env, jclass clazz, jint clientIp, jobject authBlob, jobject steamId, jobject callback)
 {
     CSteamID* steamIdAddr = (CSteamID*)env->GetDirectBufferAddress(steamId);
@@ -145,7 +145,7 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_sendUserDisconn
     SteamGameServer()->SendUserDisconnect(CSteamID((uint64)steamId));
 }
 
-JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_beginAuthSession (
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_nativeBeginAuthSession (
     JNIEnv* env, jclass clazz, jobject ticket, jlong steamId, jobject callback)
 {
     CSteamID steamIdObj = CSteamID((uint64)steamId);

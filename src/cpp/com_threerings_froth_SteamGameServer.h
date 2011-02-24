@@ -34,27 +34,11 @@ JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamGameServer_getSteamID
 
 /*
  * Class:     com_threerings_froth_SteamGameServer
- * Method:    sendUserConnectAndAuthenticate
- * Signature: (ILjava/nio/ByteBuffer;Ljava/nio/LongBuffer;Lcom/threerings/froth/SteamGameServer$AuthenticateCallback;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_sendUserConnectAndAuthenticate
-  (JNIEnv *, jclass, jint, jobject, jobject, jobject);
-
-/*
- * Class:     com_threerings_froth_SteamGameServer
  * Method:    sendUserDisconnect
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_sendUserDisconnect
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     com_threerings_froth_SteamGameServer
- * Method:    beginAuthSession
- * Signature: (Ljava/nio/ByteBuffer;JLcom/threerings/froth/SteamGameServer$AuthSessionCallback;)I
- */
-JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_beginAuthSession
-  (JNIEnv *, jclass, jobject, jlong, jobject);
 
 /*
  * Class:     com_threerings_froth_SteamGameServer
@@ -71,6 +55,22 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_endAuthSession
  */
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeInit
   (JNIEnv *, jclass, jint, jshort, jshort, jshort, jshort, jint, jstring, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    nativeSendUserConnectAndAuthenticate
+ * Signature: (ILjava/nio/ByteBuffer;Ljava/nio/LongBuffer;Lcom/threerings/froth/SteamGameServer$NativeAuthenticateCallback;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeSendUserConnectAndAuthenticate
+  (JNIEnv *, jclass, jint, jobject, jobject, jobject);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    nativeBeginAuthSession
+ * Signature: (Ljava/nio/ByteBuffer;JLcom/threerings/froth/SteamGameServer$NativeAuthSessionCallback;)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_nativeBeginAuthSession
+  (JNIEnv *, jclass, jobject, jlong, jobject);
 
 #ifdef __cplusplus
 }
