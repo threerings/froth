@@ -26,4 +26,16 @@ public class SteamUser
      * Terminates a game connection.
      */
     public static native void terminateGameConnection (int serverIp, short serverPort);
+
+    /**
+     * Requests an authentication ticket that can be used to verify our identity.
+     *
+     * @return the id of the generated ticket.
+     */
+    public static native int getAuthSessionTicket (ByteBuffer ticket);
+
+    /**
+     * Cancels a generated ticket.
+     */
+    public static native void cancelAuthTicket (int ticketId);
 }

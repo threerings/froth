@@ -15,7 +15,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_setUse
     return result;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_clearUserAchivement (
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_clearUserAchievement (
     JNIEnv* env, jclass clazz, jint userSteamId, jstring name)
 {
     const char* nameChars = env->GetStringUTFChars(name, NULL);

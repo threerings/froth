@@ -16,5 +16,5 @@ public class SteamGameServerStats
     /**
      * Clears a user achievement.
      */
-    public static native boolean clearUserAchivement (int userSteamId, String name);
+    public static native boolean clearUserAchievement (int userSteamId, String name);
 }

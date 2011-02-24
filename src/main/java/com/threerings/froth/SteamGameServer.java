@@ -16,6 +16,34 @@ public class SteamGameServer
         INVALID, NO_AUTHENTICATION, AUTHENTICATION, AUTHENTICATION_AND_SECURE };
 
     /**
+     * A callback interface for parties interested in the response to
+     * {@link #sendUserConnectAndAuthenticate}.
+     */
+    public interface AuthenticateCallback
+    {
+        /**
+         * Indicates that a client's request to authenticate was approved.
+         */
+        public void clientApprove ();
+
+        /**
+         * Indicates that a client's request to authenticate was denied.
+         */
+        public void clientDeny (int denyReason, String optionalText);
+    }
+
+    /**
+     * A callback interface for parties interested in the response to {@link #beginAuthSession}.
+     */
+    public interface AuthSessionCallback
+    {
+        /**
+         * Contains the response to a request to validate an auth ticket.
+         */
+	    public void validateAuthTicketResponse (int authSessionResponse);
+    }
+
+    /**
      * Initializes the game server interface.
      *
      * @return whether or not the interface initialized successfully.
@@ -56,12 +84,23 @@ public class SteamGameServer
      * Requests to authenticate a user.
      */
     public static native boolean sendUserConnectAndAuthenticate (
-        int clientIp, ByteBuffer authBlob, LongBuffer steamId);
+        int clientIp, ByteBuffer authBlob, LongBuffer steamId, AuthenticateCallback callback);
 
     /**
      * Notes that the identified user has disconnected.
      */
     public static native void sendUserDisconnect (long steamId);
+
+    /**
+     * Attempts to begin an auth session.
+     */
+    public static native int beginAuthSession (
+        ByteBuffer ticket, long steamId, AuthSessionCallback callback);
+
+    /**
+     * Ends the auth session for the specified id.
+     */
+    public static native void endAuthSession (long steamId);
 
     /**
      * The actual native initialization method.

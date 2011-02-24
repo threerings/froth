@@ -17,10 +17,10 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_setUse
 
 /*
  * Class:     com_threerings_froth_SteamGameServerStats
- * Method:    clearUserAchivement
+ * Method:    clearUserAchievement
  * Signature: (ILjava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_clearUserAchivement
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServerStats_clearUserAchievement
   (JNIEnv *, jclass, jint, jstring);
 
 #ifdef __cplusplus

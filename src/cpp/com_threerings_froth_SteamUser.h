@@ -31,6 +31,22 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_initiateGameConnectio
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_terminateGameConnection
   (JNIEnv *, jclass, jint, jshort);
 
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    getAuthSessionTicket
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_getAuthSessionTicket
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    cancelAuthTicket
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket
+  (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif

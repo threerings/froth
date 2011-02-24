@@ -35,10 +35,10 @@ JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamGameServer_getSteamID
 /*
  * Class:     com_threerings_froth_SteamGameServer
  * Method:    sendUserConnectAndAuthenticate
- * Signature: (ILjava/nio/ByteBuffer;Ljava/nio/LongBuffer;)Z
+ * Signature: (ILjava/nio/ByteBuffer;Ljava/nio/LongBuffer;Lcom/threerings/froth/SteamGameServer$AuthenticateCallback;)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_sendUserConnectAndAuthenticate
-  (JNIEnv *, jclass, jint, jobject, jobject);
+  (JNIEnv *, jclass, jint, jobject, jobject, jobject);
 
 /*
  * Class:     com_threerings_froth_SteamGameServer
@@ -46,6 +46,22 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_sendUserCon
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_sendUserDisconnect
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    beginAuthSession
+ * Signature: (Ljava/nio/ByteBuffer;JLcom/threerings/froth/SteamGameServer$AuthSessionCallback;)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_beginAuthSession
+  (JNIEnv *, jclass, jobject, jlong, jobject);
+
+/*
+ * Class:     com_threerings_froth_SteamGameServer
+ * Method:    endAuthSession
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_endAuthSession
   (JNIEnv *, jclass, jlong);
 
 /*
