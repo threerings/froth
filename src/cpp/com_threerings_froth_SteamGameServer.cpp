@@ -10,8 +10,13 @@ class BaseCallback
 public:
 
     BaseCallback (JNIEnv* env, CSteamID steamId, jobject object) :
-        _env(env), _steamId(steamId), _object(object)
+        _env(env), _steamId(steamId), _object(env->NewGlobalRef(object))
     {}
+
+    ~BaseCallback ()
+    {
+        _env->DeleteGlobalRef(_object);
+    }
 
 protected:
 
@@ -21,7 +26,7 @@ protected:
         jmethodID mid = _env->GetMethodID(clazz, method, signature);
         va_list args;
         va_start(args, signature);
-        _env->CallVoidMethod(_object, mid, args);
+        _env->CallVoidMethodV(_object, mid, args);
         va_end(args);
     }
 
