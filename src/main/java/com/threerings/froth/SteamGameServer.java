@@ -15,7 +15,7 @@ public class SteamGameServer
     public enum ServerMode {
         INVALID, NO_AUTHENTICATION, AUTHENTICATION, AUTHENTICATION_AND_SECURE };
 
-	/** Denial codes for {@link #sendUserConnectAndAuthenticate}. */
+    /** Denial codes for {@link #sendUserConnectAndAuthenticate}. */
     public enum DenyReason {
         INVALID, INVALID_VERSION, GENERIC, NOT_LOGGED_ON, NO_LICENSE, CHEATER,
         LOGGED_IN_ELSEWHERE, UNKNOWN_TEXT, INCOMPATIBLE_ANTICHEAT, MEMORY_CORRUPTION,
