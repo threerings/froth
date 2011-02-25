@@ -15,6 +15,22 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUtils_getAppID
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_threerings_froth_SteamUtils
+ * Method:    setWarningMessageHook
+ * Signature: (Lcom/threerings/froth/SteamUtils$WarningMessageHook;)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_setWarningMessageHook
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_threerings_froth_SteamUtils
+ * Method:    isOverlayEnabled
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isOverlayEnabled
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif
