@@ -17,6 +17,12 @@ JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamFriends_getFriendByIndex
     return SteamFriends()->GetFriendByIndex(index, flags).ConvertToUint64();
 }
 
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getFriendPersonaName (
+    JNIEnv* env, jclass clazz, jlong steamId)
+{
+    return env->NewStringUTF(SteamFriends()->GetFriendPersonaName(CSteamID((uint64)steamId)));
+}
+
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverlayToWebPage (
     JNIEnv* env, jclass clazz, jstring url)
 {

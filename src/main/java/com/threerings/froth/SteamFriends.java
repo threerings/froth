@@ -22,6 +22,11 @@ public class SteamFriends
     public static native long getFriendByIndex (int index, int flags);
 
     /**
+     * Returns the persona name of the friend with the supplied id.
+     */
+    public static native String getFriendPersonaName (long steamId);
+
+    /**
      * Activates the game overlay and opens the identified web page.
      */
     public static native void activateGameOverlayToWebPage (String url);

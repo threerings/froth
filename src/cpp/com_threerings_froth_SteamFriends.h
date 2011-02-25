@@ -27,6 +27,14 @@ JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamFriends_getFriendByIndex
 
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    getFriendPersonaName
+ * Signature: (J)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getFriendPersonaName
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    activateGameOverlayToWebPage
  * Signature: (Ljava/lang/String;)V
  */
