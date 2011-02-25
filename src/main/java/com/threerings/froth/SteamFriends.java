@@ -12,6 +12,11 @@ public class SteamFriends
     public static final int FRIEND_FLAG_IMMEDIATE = 0x04;
 
     /**
+     * Returns the local user's persona name.
+     */
+    public static native String getPersonaName ();
+
+    /**
      * Returns the number of friends with properties identified by the specified flags.
      */
     public static native int getFriendCount (int flags);

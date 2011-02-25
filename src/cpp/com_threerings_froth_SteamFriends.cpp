@@ -5,6 +5,12 @@
 
 #include "com_threerings_froth_SteamFriends.h"
 
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getPersonaName (
+    JNIEnv* env, jclass clazz)
+{
+    return env->NewStringUTF(SteamFriends()->GetPersonaName());
+}
+
 JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_getFriendCount (
     JNIEnv* env, jclass clazz, jint flags)
 {

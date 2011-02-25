@@ -11,6 +11,14 @@ extern "C" {
 #define com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE 4L
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    getPersonaName
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getPersonaName
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    getFriendCount
  * Signature: (I)I
  */
