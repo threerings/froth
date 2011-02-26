@@ -7,6 +7,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Inaccessible static: _microTxnCallbacks */
 /*
  * Class:     com_threerings_froth_SteamUser
  * Method:    getSteamID
@@ -46,6 +47,14 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_getAuthSessionTicket
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket
   (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    addNativeMicroTxnCallback
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeMicroTxnCallback
+  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

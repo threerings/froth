@@ -5,6 +5,31 @@
 
 #include "com_threerings_froth_SteamUser.h"
 
+class MicroTxnCallback
+{
+public:
+
+    MicroTxnCallback (JNIEnv* env, jclass clazz) :
+        _env(env), _clazz(clazz),
+        _responseCallback(this, &MicroTxnCallback::microTxnAuthorizationResponse)
+    {}
+
+protected:
+
+    STEAM_CALLBACK(MicroTxnCallback, microTxnAuthorizationResponse,
+            MicroTxnAuthorizationResponse_t, _responseCallback) {
+        jmethodID mid = _env->GetStaticMethodID(_clazz, "microTxnAuthorizationResponse", "(IJZ)V");
+        _env->CallStaticVoidMethod(_clazz, mid,
+            (jint)pParam->m_unAppID, (jlong)pParam->m_ulOrderID, (jboolean)pParam->m_bAuthorized);
+    }
+
+    /** The Java environment pointer. */
+    JNIEnv* _env;
+
+    /** The callback class. */
+    jclass _clazz;
+};
+
 /**
  * Helper function to apply a limit to the specified buffer.
  */
@@ -56,4 +81,10 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket (
     JNIEnv* env, jclass clazz, jint ticketId)
 {
     SteamUser()->CancelAuthTicket(ticketId);
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeMicroTxnCallback (
+    JNIEnv* env, jclass clazz)
+{
+    new MicroTxnCallback(env, clazz);
 }
