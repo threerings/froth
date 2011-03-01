@@ -26,7 +26,7 @@ public class SteamUser
     /**
      * Adds a listener for microtransation callbacks.
      */
-    public void addMicroTxnCallback (MicroTxnCallback callback)
+    public static void addMicroTxnCallback (MicroTxnCallback callback)
     {
         if (_microTxnCallbacks == null) {
             _microTxnCallbacks = ObserverList.newSafeInOrder();
@@ -38,7 +38,7 @@ public class SteamUser
     /**
      * Removes a microtransaction callback listener.
      */
-    public void removeMicroTxnCallback (MicroTxnCallback callback)
+    public static void removeMicroTxnCallback (MicroTxnCallback callback)
     {
         if (_microTxnCallbacks != null) {
             _microTxnCallbacks.remove(callback);
@@ -82,7 +82,7 @@ public class SteamUser
     /**
      * Called from native code to handle a microtransaction auth response.
      */
-    protected void microTxnAuthorizationResponse (
+    protected static void microTxnAuthorizationResponse (
         final int appId, final long orderId, final boolean authorized)
     {
         _microTxnCallbacks.apply(new ObserverList.ObserverOp<MicroTxnCallback>() {
