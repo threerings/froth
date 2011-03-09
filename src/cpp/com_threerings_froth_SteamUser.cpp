@@ -9,25 +9,22 @@ class MicroTxnCallback
 {
 public:
 
-    MicroTxnCallback (JNIEnv* env, jclass clazz) :
-        _env(env), _clazz(clazz),
-        _responseCallback(this, &MicroTxnCallback::microTxnAuthorizationResponse)
+    MicroTxnCallback (JNIEnv* env) :
+        _env(env), _responseCallback(this, &MicroTxnCallback::microTxnAuthorizationResponse)
     {}
 
 protected:
 
     STEAM_CALLBACK(MicroTxnCallback, microTxnAuthorizationResponse,
             MicroTxnAuthorizationResponse_t, _responseCallback) {
-        jmethodID mid = _env->GetStaticMethodID(_clazz, "microTxnAuthorizationResponse", "(IJZ)V");
-        _env->CallStaticVoidMethod(_clazz, mid,
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamUser");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "microTxnAuthorizationResponse", "(IJZ)V");
+        _env->CallStaticVoidMethod(clazz, mid,
             (jint)pParam->m_unAppID, (jlong)pParam->m_ulOrderID, (jboolean)pParam->m_bAuthorized);
     }
 
     /** The Java environment pointer. */
     JNIEnv* _env;
-
-    /** The callback class. */
-    jclass _clazz;
 };
 
 /**
@@ -86,5 +83,5 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket (
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeMicroTxnCallback (
     JNIEnv* env, jclass clazz)
 {
-    new MicroTxnCallback(env, clazz);
+    new MicroTxnCallback(env);
 }
