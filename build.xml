@@ -57,7 +57,7 @@
 
   <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
-    <apply os="Linux" executable="g++" parallel="true">
+    <apply os="Linux" executable="g++" parallel="true" failonerror="true">
       <arg line="-o lib/i686-Linux/libfroth.so -shared -lsteam_api"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/linux"/>
@@ -65,7 +65,7 @@
       <arg value="-L${deploy.dir}/sdk/redistributable_bin/linux32"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-    <apply osfamily="windows" executable="SetEnv.cmd" parallel="true">
+    <apply osfamily="windows" executable="SetEnv.cmd" parallel="true" failonerror="true">
       <arg line="/x86 &amp;&amp; cl -Felib/i686-Windows/froth.dll -LD"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/win32"/>
@@ -73,7 +73,7 @@
       <arg value="${deploy.dir}/sdk/redistributable_bin/steam_api.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-    <apply osfamily="windows" executable="SetEnv.Cmd" parallel="true">
+    <apply osfamily="windows" executable="SetEnv.Cmd" parallel="true" failonerror="true">
       <arg line="/x64 &amp;&amp; cl -Felib/i686-Windows/froth64.dll -LD"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/win32"/>
@@ -81,7 +81,7 @@
       <arg value="${deploy.dir}/sdk/redistributable_bin/win64/steam_api64.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-    <apply osfamily="mac" executable="g++" parallel="true">
+    <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
       <arg line="-o lib/Universal-MacOS/libfroth.jnilib -bundle -lsteam_api"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
@@ -119,6 +119,7 @@
       <class name="com.threerings.froth.SteamFriends"/>
       <class name="com.threerings.froth.SteamGameServer"/>
       <class name="com.threerings.froth.SteamGameServerStats"/>
+      <class name="com.threerings.froth.SteamNetworking"/>
       <class name="com.threerings.froth.SteamUser"/>
       <class name="com.threerings.froth.SteamUtils"/>
     </javah>
