@@ -34,6 +34,30 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_terminateGameConnecti
 
 /*
  * Class:     com_threerings_froth_SteamUser
+ * Method:    startVoiceRecording
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_startVoiceRecording
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    stopVoiceRecording
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_stopVoiceRecording
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    getVoiceOptimalSampleRate
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_getVoiceOptimalSampleRate
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
  * Method:    getAuthSessionTicket
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
@@ -55,6 +79,30 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeMicroTxnCallback
   (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    nativeGetAvailableVoice
+ * Signature: (Ljava/nio/IntBuffer;Ljava/nio/IntBuffer;I)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeGetAvailableVoice
+  (JNIEnv *, jclass, jobject, jobject, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    nativeGetVoice
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;I)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeGetVoice
+  (JNIEnv *, jclass, jobject, jobject, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamUser
+ * Method:    nativeDecompressVoice
+ * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;I)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeDecompressVoice
+  (JNIEnv *, jclass, jobject, jobject, jint);
 
 #ifdef __cplusplus
 }

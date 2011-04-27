@@ -29,6 +29,12 @@ JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getFriendPerson
     return env->NewStringUTF(SteamFriends()->GetFriendPersonaName(CSteamID((uint64)steamId)));
 }
 
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_setInGameVoiceSpeaking (
+    JNIEnv* env, jclass clazz, jlong steamId, jboolean speaking)
+{
+    SteamFriends()->SetInGameVoiceSpeaking(CSteamID((uint64)steamId), speaking);
+}
+
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverlayToWebPage (
     JNIEnv* env, jclass clazz, jstring url)
 {

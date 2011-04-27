@@ -4,6 +4,7 @@
 package com.threerings.froth;
 
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 import com.samskivert.util.ObserverList;
 
@@ -12,6 +13,11 @@ import com.samskivert.util.ObserverList;
  */
 public class SteamUser
 {
+    /** Result codes for {@link #getVoice} and {@link #decompressVoice}, etc. */
+    public enum VoiceResult {
+        OK, NOT_INITIALIZED, NOT_RECORDING, NO_DATA, BUFFER_TOO_SMALL,
+        DATA_CORRUPTED, RESTRICTED, UNSUPPORTED_CODEC };
+
     /**
      * A callback interface for parties interested in microtransaction authorization responses.
      */
@@ -63,6 +69,55 @@ public class SteamUser
     public static native void terminateGameConnection (int serverIp, short serverPort);
 
     /**
+     * Starts voice recording.
+     */
+    public static native void startVoiceRecording ();
+
+    /**
+     * Stops voice recording.
+     */
+    public static native void stopVoiceRecording ();
+
+    /**
+     * Determines how much voice data is currently available.
+     */
+    public static VoiceResult getAvailableVoice (
+        IntBuffer compressed, IntBuffer uncompressed, int uncompressedDesiredSampleRate)
+    {
+        int result = nativeGetAvailableVoice(
+            compressed, uncompressed, uncompressedDesiredSampleRate);
+        return VoiceResult.values()[result];
+    }
+
+    /**
+     * Retrieves the currently recorded voice data.
+     *
+     * @param compressed the buffer to receive the compressed data, or null for none.
+     * @param uncompressed the buffer to receive the uncompressed data, or null for none.
+     */
+    public static VoiceResult getVoice (
+        ByteBuffer compressed, ByteBuffer uncompressed, int uncompressedDesiredSampleRate)
+    {
+        int result = nativeGetVoice(compressed, uncompressed, uncompressedDesiredSampleRate);
+        return VoiceResult.values()[result];
+    }
+
+    /**
+     * Decompresses a block of voice data.
+     */
+    public static VoiceResult decompressVoice (
+        ByteBuffer compressed, ByteBuffer dest, int desiredSampleRate)
+    {
+        int result = nativeDecompressVoice(compressed, dest, desiredSampleRate);
+        return VoiceResult.values()[result];
+    }
+
+    /**
+     * Returns the optimal sample rate to use for {@link #decompressVoice}.
+     */
+    public static native int getVoiceOptimalSampleRate ();
+
+    /**
      * Requests an authentication ticket that can be used to verify our identity.
      *
      * @return the id of the generated ticket.
@@ -78,6 +133,24 @@ public class SteamUser
      * Adds the native microtransaction callback.
      */
     protected static native void addNativeMicroTxnCallback ();
+
+    /**
+     * The actual native voice data length retrieval method.
+     */
+    public static native int nativeGetAvailableVoice (
+        IntBuffer compressed, IntBuffer uncompressed, int uncompressedDesiredSampleRate);
+
+    /**
+     * The actual native voice retrieval method.
+     */
+    protected static native int nativeGetVoice (
+        ByteBuffer compressed, ByteBuffer uncompressed, int uncompressedDesiredSampleRate);
+
+    /**
+     * The actual native voice decompression method.
+     */
+    protected static native int nativeDecompressVoice (
+        ByteBuffer compressed, ByteBuffer dest, int desiredSampleRate);
 
     /**
      * Called from native code to handle a microtransaction auth response.

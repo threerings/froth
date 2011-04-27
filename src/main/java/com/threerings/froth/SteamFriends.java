@@ -32,6 +32,11 @@ public class SteamFriends
     public static native String getFriendPersonaName (long steamId);
 
     /**
+     * Notes that the user is using the in-game voice chat (in order to mute the friends chat).
+     */
+    public static native void setInGameVoiceSpeaking (long steamId, boolean speaking);
+
+    /**
      * Activates the game overlay and opens the identified web page.
      */
     public static native void activateGameOverlayToWebPage (String url);

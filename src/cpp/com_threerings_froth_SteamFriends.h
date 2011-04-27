@@ -43,6 +43,14 @@ JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getFriendPerson
 
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    setInGameVoiceSpeaking
+ * Signature: (JZ)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_setInGameVoiceSpeaking
+  (JNIEnv *, jclass, jlong, jboolean);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    activateGameOverlayToWebPage
  * Signature: (Ljava/lang/String;)V
  */
