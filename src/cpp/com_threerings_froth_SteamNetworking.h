@@ -7,6 +7,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* Inaccessible static: _sessionRequestCallbacks */
+/* Inaccessible static: _sessionConnectCallbacks */
 /*
  * Class:     com_threerings_froth_SteamNetworking
  * Method:    isP2PPacketAvailable
@@ -54,6 +56,22 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_closeP2PCha
  */
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_nativeSendP2PPacket
   (JNIEnv *, jclass, jlong, jobject, jint, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamNetworking
+ * Method:    addNativeSessionRequestCallback
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamNetworking_addNativeSessionRequestCallback
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamNetworking
+ * Method:    addNativeSessionConnectCallback
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamNetworking_addNativeSessionConnectCallback
+  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

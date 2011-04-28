@@ -5,6 +5,49 @@
 
 #include "com_threerings_froth_SteamNetworking.h"
 
+class SessionRequestCallback
+{
+public:
+
+    SessionRequestCallback (JNIEnv* env) :
+        _env(env), _responseCallback(this, &SessionRequestCallback::p2pSessionRequest)
+    {}
+
+protected:
+
+    STEAM_CALLBACK(SessionRequestCallback, p2pSessionRequest,
+            P2PSessionRequest_t, _responseCallback) {
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamNetworking");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "p2pSessionRequest", "(J)V");
+        _env->CallStaticVoidMethod(clazz, mid, (jlong)pParam->m_steamIDRemote.ConvertToUint64());
+    }
+
+    /** The Java environment pointer. */
+    JNIEnv* _env;
+};
+
+class SessionConnectCallback
+{
+public:
+
+    SessionConnectCallback (JNIEnv* env) :
+        _env(env), _responseCallback(this, &SessionConnectCallback::p2pSessionConnectFail)
+    {}
+
+protected:
+
+    STEAM_CALLBACK(SessionConnectCallback, p2pSessionConnectFail,
+            P2PSessionConnectFail_t, _responseCallback) {
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamNetworking");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "p2pSessionConnectFail", "(JI)V");
+        _env->CallStaticVoidMethod(clazz, mid,
+            (jlong)pParam->m_steamIDRemote.ConvertToUint64(), (jint)pParam->m_eP2PSessionError);
+    }
+
+    /** The Java environment pointer. */
+    JNIEnv* _env;
+};
+
 /**
  * Helper function to apply a limit to the specified buffer.
  */
@@ -64,5 +107,17 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_nativeSendP
         env->GetDirectBufferAddress(data),
         env->GetDirectBufferCapacity(data),
         (EP2PSend)sendType, channel);
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamNetworking_addNativeSessionRequestCallback (
+    JNIEnv* env, jclass clazz)
+{
+    new SessionRequestCallback(env);
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamNetworking_addNativeSessionConnectCallback (
+    JNIEnv* env, jclass clazz)
+{
+    new SessionConnectCallback(env);
 }
 
