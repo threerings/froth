@@ -4,6 +4,7 @@
 #include <steam_api.h>
 
 #include "com_threerings_froth_SteamNetworking.h"
+#include "utils.h"
 
 class SessionRequestCallback
 {
@@ -48,16 +49,6 @@ protected:
     JNIEnv* _env;
 };
 
-/**
- * Helper function to apply a limit to the specified buffer.
- */
-static void limitBuffer (JNIEnv* env, jobject buffer, uint32 limit)
-{
-    jclass bclazz = env->FindClass("java/nio/Buffer");
-    jmethodID mid = env->GetMethodID(bclazz, "limit", "(I)Ljava/nio/Buffer;");
-    env->CallObjectMethod(buffer, mid, limit);
-}
-
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_isP2PPacketAvailable (
     JNIEnv* env, jclass clazz, jobject msgSize, jint channel)
 {
@@ -76,7 +67,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_readP2PPack
         (CSteamID*)env->GetDirectBufferAddress(steamIdRemote),
         channel);
     if (result) {
-        limitBuffer(env, dest, length);
+        setBufferLimit(env, dest, length);
     }
     return result;
 }
@@ -105,7 +96,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamNetworking_nativeSendP
     return SteamNetworking()->SendP2PPacket(
         CSteamID((uint64)steamIdRemote),
         env->GetDirectBufferAddress(data),
-        env->GetDirectBufferCapacity(data),
+        getBufferLimit(env, data),
         (EP2PSend)sendType, channel);
 }
 

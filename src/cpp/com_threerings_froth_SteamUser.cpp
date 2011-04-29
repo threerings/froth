@@ -4,6 +4,7 @@
 #include <steam_api.h>
 
 #include "com_threerings_froth_SteamUser.h"
+#include "utils.h"
 
 class MicroTxnCallback
 {
@@ -27,16 +28,6 @@ protected:
     JNIEnv* _env;
 };
 
-/**
- * Helper function to apply a limit to the specified buffer.
- */
-static void limitBuffer (JNIEnv* env, jobject buffer, uint32 limit)
-{
-    jclass bclazz = env->FindClass("java/nio/Buffer");
-    jmethodID mid = env->GetMethodID(bclazz, "limit", "(I)Ljava/nio/Buffer;");
-    env->CallObjectMethod(buffer, mid, limit);
-}
-
 JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamUser_getSteamID (
     JNIEnv* env, jclass clazz)
 {
@@ -52,7 +43,7 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_initiateGameConnectio
         env->GetDirectBufferCapacity(authBlob),
         CSteamID((uint64)gameServerSteamId),
         serverIp, serverPort, secure);
-    limitBuffer(env, authBlob, length);
+    setBufferLimit(env, authBlob, length);
     return length;
 }
 
@@ -88,7 +79,7 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_getAuthSessionTicket 
         env->GetDirectBufferAddress(ticket),
         env->GetDirectBufferCapacity(ticket),
         &length);
-    limitBuffer(env, ticket, length);
+    setBufferLimit(env, ticket, length);
     return ticketId;
 }
 
@@ -137,10 +128,10 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeGetVoice (
         uncompressedDesiredSampleRate);
     if (result == k_EVoiceResultOK) {
         if (compressed != NULL) {
-            limitBuffer(env, compressed, compressedLength);
+            setBufferLimit(env, compressed, compressedLength);
         }
         if (uncompressed != NULL) {
-            limitBuffer(env, uncompressed, uncompressedLength);
+            setBufferLimit(env, uncompressed, uncompressedLength);
         }
     }
     return result;
@@ -152,13 +143,13 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeDecompressVoice
     uint32 length;
     EVoiceResult result = SteamUser()->DecompressVoice(
         env->GetDirectBufferAddress(compressed),
-        env->GetDirectBufferCapacity(compressed),
+        getBufferLimit(env, compressed),
         env->GetDirectBufferAddress(dest),
         env->GetDirectBufferCapacity(dest),
         &length,
         desiredSampleRate);
     if (result == k_EVoiceResultOK) {
-        limitBuffer(env, dest, length);
+        setBufferLimit(env, dest, length);
     }
     return result;
 }

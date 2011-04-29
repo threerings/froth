@@ -4,6 +4,7 @@
 #include <steam_gameserver.h>
 
 #include "com_threerings_froth_SteamGameServer.h"
+#include "utils.h"
 
 class BaseCallback
 {
@@ -131,8 +132,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeSendU
     CSteamID* steamIdAddr = (CSteamID*)env->GetDirectBufferAddress(steamId);
     jboolean result = SteamGameServer()->SendUserConnectAndAuthenticate(
         clientIp, env->GetDirectBufferAddress(authBlob),
-        env->GetDirectBufferCapacity(authBlob),
-        steamIdAddr);
+        getBufferLimit(env, authBlob), steamIdAddr);
     if (result) {
         new AuthenticateCallback(env, *steamIdAddr, callback);
     }
@@ -151,7 +151,7 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_nativeBeginAuth
     CSteamID steamIdObj = CSteamID((uint64)steamId);
     EBeginAuthSessionResult result = SteamGameServer()->BeginAuthSession(
         env->GetDirectBufferAddress(ticket),
-        env->GetDirectBufferCapacity(ticket),
+        getBufferLimit(env, ticket),
         steamIdObj);
     if (result == k_EBeginAuthSessionResultOK) {
         new AuthSessionCallback(env, steamIdObj, callback);
