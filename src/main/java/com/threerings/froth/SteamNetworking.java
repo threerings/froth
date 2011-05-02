@@ -44,6 +44,12 @@ public class SteamNetworking
         public void p2pSessionConnectFail (long steamIdRemote, P2PSessionError error);
     }
 
+    /** The maximum size for unreliable messages (from the Steamworks documentation). */
+    public static final int MAX_UNRELIABLE_SIZE = 1200;
+
+    /** The maximum size for reliable messages. */
+    public static final int MAX_RELIABLE_SIZE = 1048576;
+
     /**
      * Adds a listener for session request callbacks.
      */
