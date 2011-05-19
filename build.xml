@@ -29,7 +29,7 @@
       <path refid="compile.classpath"/>
       <pathelement location="${classes.dir}"/>
     </path>
-    <unzip src="lib/steamworks_sdk_113.zip" dest="${deploy.dir}" overwrite="false">
+    <unzip src="lib/steamworks_sdk_112.zip" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
   </target>
