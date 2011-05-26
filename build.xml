@@ -119,6 +119,7 @@
       <class name="com.threerings.froth.SteamFriends"/>
       <class name="com.threerings.froth.SteamGameServer"/>
       <class name="com.threerings.froth.SteamGameServerStats"/>
+      <class name="com.threerings.froth.SteamMatchmaking"/>
       <class name="com.threerings.froth.SteamNetworking"/>
       <class name="com.threerings.froth.SteamUser"/>
       <class name="com.threerings.froth.SteamUtils"/>

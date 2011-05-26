@@ -7,6 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#undef com_threerings_froth_SteamNetworking_MAX_UNRELIABLE_SIZE
+#define com_threerings_froth_SteamNetworking_MAX_UNRELIABLE_SIZE 1200L
+#undef com_threerings_froth_SteamNetworking_MAX_RELIABLE_SIZE
+#define com_threerings_froth_SteamNetworking_MAX_RELIABLE_SIZE 1048576L
 /* Inaccessible static: _sessionRequestCallbacks */
 /* Inaccessible static: _sessionConnectCallbacks */
 /*
