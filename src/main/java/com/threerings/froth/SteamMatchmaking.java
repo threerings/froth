@@ -16,10 +16,10 @@ public class SteamMatchmaking
     /** Result codes. */
     public enum Result { OK, NO_CONNECTION, TIMEOUT, FAIL, ACCESS_DENIED, LIMIT_EXCEEDED  };
 
-	/** Chat room enter request responses. */
-	public enum ChatRoomEnterResponse {
-	    SUCCESS, DOESNT_EXIST, NOT_ALLOWED, FULL, ERROR,
-	    BANNED, LIMITED, CLAN_DISABLED, COMMUNITY_BAN };
+    /** Chat room enter request responses. */
+    public enum ChatRoomEnterResponse {
+        SUCCESS, DOESNT_EXIST, NOT_ALLOWED, FULL, ERROR,
+        BANNED, LIMITED, CLAN_DISABLED, COMMUNITY_BAN };
 
     /**
      * Used to communicate the result of a lobby creation request.
