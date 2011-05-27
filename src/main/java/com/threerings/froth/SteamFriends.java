@@ -8,6 +8,9 @@ package com.threerings.froth;
  */
 public class SteamFriends
 {
+    /** The various states a user can be in. */
+    public enum PersonaState { OFFLINE, ONLINE, BUSY, AWAY, SNOOZE };
+
     /** Flag for "regular" friends. */
     public static final int FRIEND_FLAG_IMMEDIATE = 0x04;
 
@@ -27,6 +30,14 @@ public class SteamFriends
     public static native long getFriendByIndex (int index, int flags);
 
     /**
+     * Retrieves the state of a friend.
+     */
+    public static PersonaState getFriendPersonaState (long steamId)
+    {
+        return PersonaState.values()[nativeGetFriendPersonaState(steamId)];
+    }
+
+    /**
      * Returns the persona name of the friend with the supplied id.
      */
     public static native String getFriendPersonaName (long steamId);
@@ -40,4 +51,9 @@ public class SteamFriends
      * Activates the game overlay and opens the identified web page.
      */
     public static native void activateGameOverlayToWebPage (String url);
+
+    /**
+     * The actual native persona state retrieval method.
+     */
+    protected static native int nativeGetFriendPersonaState (long steamId);
 }

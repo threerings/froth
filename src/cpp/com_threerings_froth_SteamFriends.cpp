@@ -42,3 +42,9 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverla
     SteamFriends()->ActivateGameOverlayToWebPage(str);
     env->ReleaseStringUTFChars(url, str);
 }
+
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_nativeGetFriendPersonaState (
+    JNIEnv* env, jclass clazz, jlong steamId)
+{
+    return SteamFriends()->GetFriendPersonaState(CSteamID((uint64)steamId));
+}

@@ -57,6 +57,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_setInGameVoiceSpea
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverlayToWebPage
   (JNIEnv *, jclass, jstring);
 
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    nativeGetFriendPersonaState
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_nativeGetFriendPersonaState
+  (JNIEnv *, jclass, jlong);
+
 #ifdef __cplusplus
 }
 #endif
