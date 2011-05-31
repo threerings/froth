@@ -182,6 +182,27 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamMatchmaking_inviteUser
         CSteamID((uint64)steamIdLobby), CSteamID((uint64)steamIdInvitee));
 }
 
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamMatchmaking_getLobbyData (
+    JNIEnv* env, jclass clazz, jlong steamIdLobby, jstring key)
+{
+    const char* kstr = env->GetStringUTFChars(key, NULL);
+    jstring result = env->NewStringUTF(
+        SteamMatchmaking()->GetLobbyData(CSteamID((uint64)steamIdLobby), kstr));
+    env->ReleaseStringUTFChars(key, kstr);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamMatchmaking_setLobbyData (
+    JNIEnv* env, jclass clazz, jlong steamIdLobby, jstring key, jstring value)
+{
+    const char* kstr = env->GetStringUTFChars(key, NULL);
+    const char* vstr = env->GetStringUTFChars(value, NULL);
+    jboolean result = SteamMatchmaking()->SetLobbyData(CSteamID((uint64)steamIdLobby), kstr, vstr);
+    env->ReleaseStringUTFChars(key, kstr);
+    env->ReleaseStringUTFChars(value, vstr);
+    return result;
+}
+
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamMatchmaking_nativeCreateLobby (
     JNIEnv* env, jclass clazz, jint type, jint maxMembers, jobject callback)
 {

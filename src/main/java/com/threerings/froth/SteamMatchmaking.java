@@ -102,6 +102,16 @@ public class SteamMatchmaking
     public static native boolean inviteUserToLobby (long steamIdLobby, long steamIdInvitee);
 
     /**
+     * Retrieves a piece of data associated with a lobby.
+     */
+    public static native String getLobbyData (long steamIdLobby, String key);
+
+    /**
+     * Sets a piece of data associated with a lobby.
+     */
+    public static native boolean setLobbyData (long steamIdLobby, String key, String value);
+
+    /**
      * The actual native lobby creation method.
      */
     protected static native void nativeCreateLobby (

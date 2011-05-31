@@ -34,6 +34,22 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamMatchmaking_inviteUser
 
 /*
  * Class:     com_threerings_froth_SteamMatchmaking
+ * Method:    getLobbyData
+ * Signature: (JLjava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamMatchmaking_getLobbyData
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamMatchmaking
+ * Method:    setLobbyData
+ * Signature: (JLjava/lang/String;Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamMatchmaking_setLobbyData
+  (JNIEnv *, jclass, jlong, jstring, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamMatchmaking
  * Method:    nativeCreateLobby
  * Signature: (IILcom/threerings/froth/SteamMatchmaking$CreateLobbyCallback;)V
  */
