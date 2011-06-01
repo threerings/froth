@@ -9,6 +9,7 @@ extern "C" {
 #endif
 #undef com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE
 #define com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE 4L
+/* Inaccessible static: _gameRichPresenceJoinRequestCallbacks */
 /*
  * Class:     com_threerings_froth_SteamFriends
  * Method:    getPersonaName
@@ -59,11 +60,43 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverla
 
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    setRichPresence
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamFriends_setRichPresence
+  (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    getFriendRichPresence
+ * Signature: (JLjava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamFriends_getFriendRichPresence
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    inviteUserToGame
+ * Signature: (JLjava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamFriends_inviteUserToGame
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    nativeGetFriendPersonaState
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_nativeGetFriendPersonaState
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    addNativeGameRichPresenceJoinRequestCallback
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_addNativeGameRichPresenceJoinRequestCallback
+  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }
