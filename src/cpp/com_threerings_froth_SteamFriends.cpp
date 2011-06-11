@@ -5,6 +5,28 @@
 
 #include "com_threerings_froth_SteamFriends.h"
 
+class GameOverlayActivationCallback
+{
+public:
+
+    GameOverlayActivationCallback (JNIEnv* env) :
+        _env(env), _responseCallback(this,
+            &GameOverlayActivationCallback::gameOverlayActivated)
+    {}
+
+protected:
+
+    STEAM_CALLBACK(GameOverlayActivationCallback, gameOverlayActivated,
+            GameOverlayActivated_t, _responseCallback) {
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamFriends");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "gameOverlayActivated", "(Z)V");
+        _env->CallStaticVoidMethod(clazz, mid, (jboolean)pParam->m_bActive);
+    }
+
+    /** The Java environment pointer. */
+    JNIEnv* _env;
+};
+
 class GameRichPresenceJoinRequestCallback
 {
 public:
@@ -102,6 +124,12 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_nativeGetFriendPer
     JNIEnv* env, jclass clazz, jlong steamId)
 {
     return SteamFriends()->GetFriendPersonaState(CSteamID((uint64)steamId));
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_addNativeGameOverlayActivationCallback (
+    JNIEnv* env, jclass clazz)
+{
+    new GameOverlayActivationCallback(env);
 }
 
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_addNativeGameRichPresenceJoinRequestCallback (

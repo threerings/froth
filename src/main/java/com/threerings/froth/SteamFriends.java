@@ -14,6 +14,17 @@ public class SteamFriends
     public enum PersonaState { OFFLINE, ONLINE, BUSY, AWAY, SNOOZE };
 
     /**
+     * Used to communicate activation and deactivation of the game overlay.
+     */
+    public interface GameOverlayActivationCallback
+    {
+        /**
+         * Called when the user activates or deactivates the game overlay.
+         */
+        public void gameOverlayActivated (boolean active);
+    }
+
+    /**
      * Used to communicate requests to join a friend.
      */
     public interface GameRichPresenceJoinRequestCallback
@@ -32,6 +43,28 @@ public class SteamFriends
 
     /** A special rich presence key providing information on how to connect to a player. */
     public static final String CONNECT_KEY = "connect";
+
+    /**
+     * Adds a listener for game overlay activation callbacks.
+     */
+    public static void addGameOverlayActivationCallback (GameOverlayActivationCallback callback)
+    {
+        if (_gameOverlayActivationCallbacks == null) {
+            _gameOverlayActivationCallbacks = ObserverList.newSafeInOrder();
+            addNativeGameOverlayActivationCallback();
+        }
+        _gameOverlayActivationCallbacks.add(callback);
+    }
+
+    /**
+     * Removes a game overlay activation callback listener.
+     */
+    public static void removeGameOverlayActivationCallback (GameOverlayActivationCallback callback)
+    {
+        if (_gameOverlayActivationCallbacks != null) {
+            _gameOverlayActivationCallbacks.remove(callback);
+        }
+    }
 
     /**
      * Adds a listener for rich presence join request callbacks.
@@ -116,9 +149,28 @@ public class SteamFriends
     protected static native int nativeGetFriendPersonaState (long steamId);
 
     /**
+     * Adds the native game overlay activation callback.
+     */
+    protected static native void addNativeGameOverlayActivationCallback ();
+
+    /**
      * Adds the native game rich presence join request callback.
      */
     protected static native void addNativeGameRichPresenceJoinRequestCallback ();
+
+    /**
+     * Called from native code to handle a game lobby join request.
+     */
+    protected static void gameOverlayActivated (final boolean active)
+    {
+        _gameOverlayActivationCallbacks.apply(
+                new ObserverList.ObserverOp<GameOverlayActivationCallback>() {
+            public boolean apply (GameOverlayActivationCallback callback) {
+                callback.gameOverlayActivated(active);
+                return true;
+            }
+        });
+    }
 
     /**
      * Called from native code to handle a game lobby join request.
@@ -134,6 +186,9 @@ public class SteamFriends
             }
         });
     }
+
+    /** The list of game overlay activation callback listeners, if initialized. */
+    protected static ObserverList<GameOverlayActivationCallback> _gameOverlayActivationCallbacks;
 
     /** The list of game rich presence join request callback listeners, if initialized. */
     protected static ObserverList<GameRichPresenceJoinRequestCallback>

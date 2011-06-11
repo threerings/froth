@@ -9,6 +9,7 @@ extern "C" {
 #endif
 #undef com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE
 #define com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE 4L
+/* Inaccessible static: _gameOverlayActivationCallbacks */
 /* Inaccessible static: _gameRichPresenceJoinRequestCallbacks */
 /*
  * Class:     com_threerings_froth_SteamFriends
@@ -89,6 +90,14 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamFriends_inviteUserToGa
  */
 JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_nativeGetFriendPersonaState
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
+ * Method:    addNativeGameOverlayActivationCallback
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_addNativeGameOverlayActivationCallback
+  (JNIEnv *, jclass);
 
 /*
  * Class:     com_threerings_froth_SteamFriends

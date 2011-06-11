@@ -31,6 +31,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_setWarningMessageHoo
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isOverlayEnabled
   (JNIEnv *, jclass);
 
+/*
+ * Class:     com_threerings_froth_SteamUtils
+ * Method:    nativeSetOverlayNotificationPosition
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_nativeSetOverlayNotificationPosition
+  (JNIEnv *, jclass, jint);
+
 #ifdef __cplusplus
 }
 #endif

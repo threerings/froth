@@ -46,3 +46,9 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isOverlayEnabled
 {
     return getUtils()->IsOverlayEnabled();
 }
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_nativeSetOverlayNotificationPosition (
+    JNIEnv* env, jclass clazz, jint position)
+{
+    getUtils()->SetOverlayNotificationPosition((ENotificationPosition)position);
+}

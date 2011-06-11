@@ -8,6 +8,9 @@ package com.threerings.froth;
  */
 public class SteamUtils
 {
+	/** The available positions for overlay notifications. */
+    public enum NotificationPosition { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
+
     /**
      * Provides a means to obtain warning messages from the Steam API.
      */
@@ -27,6 +30,14 @@ public class SteamUtils
     public static native int getAppID ();
 
     /**
+     * Sets the location of the notifications on the overlay.
+     */
+    public static void setOverlayNotificationPosition (NotificationPosition position)
+    {
+        nativeSetOverlayNotificationPosition(position.ordinal());
+    }
+
+    /**
      * Sets the callback for warning messages.
      */
     public static native void setWarningMessageHook (WarningMessageHook hook);
@@ -35,4 +46,9 @@ public class SteamUtils
      * Checks whether the overlay is enabled and ready for use.
      */
     public static native boolean isOverlayEnabled ();
+
+    /**
+     * The actual native overlay position set method.
+     */
+    protected static native void nativeSetOverlayNotificationPosition (int position);
 }
