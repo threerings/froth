@@ -6,6 +6,35 @@
 #include "com_threerings_froth_SteamUser.h"
 #include "utils.h"
 
+class SteamServerCallback
+{
+public:
+
+    SteamServerCallback (JNIEnv* env) :
+        _env(env), _connectedCallback(this, &SteamServerCallback::steamServersConnected),
+            _disconnectedCallback(this, &SteamServerCallback::steamServersDisconnected)
+    {}
+
+protected:
+
+    STEAM_CALLBACK(SteamServerCallback, steamServersConnected,
+            SteamServersConnected_t, _connectedCallback) {
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamUser");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "steamServersConnected", "()V");
+        _env->CallStaticVoidMethod(clazz, mid);
+    }
+
+    STEAM_CALLBACK(SteamServerCallback, steamServersDisconnected,
+            SteamServersDisconnected_t, _disconnectedCallback) {
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamUser");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "steamServersDisconnected", "()V");
+        _env->CallStaticVoidMethod(clazz, mid);
+    }
+
+    /** The Java environment pointer. */
+    JNIEnv* _env;
+};
+
 class MicroTxnCallback
 {
 public:
@@ -27,6 +56,12 @@ protected:
     /** The Java environment pointer. */
     JNIEnv* _env;
 };
+
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUser_isLoggedOn (
+    JNIEnv* env, jclass clazz)
+{
+    return SteamUser()->BLoggedOn();
+}
 
 JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamUser_getSteamID (
     JNIEnv* env, jclass clazz)
@@ -87,6 +122,12 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_cancelAuthTicket (
     JNIEnv* env, jclass clazz, jint ticketId)
 {
     SteamUser()->CancelAuthTicket(ticketId);
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeSteamServerCallback (
+    JNIEnv* env, jclass clazz)
+{
+    new SteamServerCallback(env);
 }
 
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_addNativeMicroTxnCallback (

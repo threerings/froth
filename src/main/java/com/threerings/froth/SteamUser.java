@@ -19,6 +19,22 @@ public class SteamUser
         DATA_CORRUPTED, RESTRICTED, UNSUPPORTED_CODEC };
 
     /**
+     * A callback interface for parties interested in server connection events.
+     */
+    public interface SteamServerCallback
+    {
+        /**
+         * Called when a connection has been established to the Steam servers.
+         */
+        public void steamServersConnected ();
+
+        /**
+         * Called when we have lost connection to the Steam servers.
+         */
+        public void steamServersDisconnected ();
+    }
+
+    /**
      * A callback interface for parties interested in microtransaction authorization responses.
      */
     public interface MicroTxnCallback
@@ -27,6 +43,28 @@ public class SteamUser
          * Called when the user accepts or denies a microtransaction request.
          */
         public void microTxnAuthorizationResponse (int appId, long orderId, boolean authorized);
+    }
+
+    /**
+     * Adds a listener for Steam server callbacks.
+     */
+    public static void addSteamServerCallback (SteamServerCallback callback)
+    {
+        if (_steamServerCallbacks == null) {
+            _steamServerCallbacks = ObserverList.newSafeInOrder();
+            addNativeSteamServerCallback();
+        }
+        _steamServerCallbacks.add(callback);
+    }
+
+    /**
+     * Removes a Steam server callback listener.
+     */
+    public static void removeSteamServerCallback (SteamServerCallback callback)
+    {
+        if (_steamServerCallbacks != null) {
+            _steamServerCallbacks.remove(callback);
+        }
     }
 
     /**
@@ -50,6 +88,11 @@ public class SteamUser
             _microTxnCallbacks.remove(callback);
         }
     }
+
+    /**
+     * Checks whether we have a live and active connection to the Steam servers.
+     */
+    public static native boolean isLoggedOn ();
 
     /**
      * Returns the user's steam ID.
@@ -130,6 +173,11 @@ public class SteamUser
     public static native void cancelAuthTicket (int ticketId);
 
     /**
+     * Adds the native Steam server callback.
+     */
+    protected static native void addNativeSteamServerCallback ();
+
+    /**
      * Adds the native microtransaction callback.
      */
     protected static native void addNativeMicroTxnCallback ();
@@ -137,7 +185,7 @@ public class SteamUser
     /**
      * The actual native voice data length retrieval method.
      */
-    public static native int nativeGetAvailableVoice (
+    protected static native int nativeGetAvailableVoice (
         IntBuffer compressed, IntBuffer uncompressed, int uncompressedDesiredSampleRate);
 
     /**
@@ -153,6 +201,32 @@ public class SteamUser
         ByteBuffer compressed, ByteBuffer dest, int desiredSampleRate);
 
     /**
+     * Called from native code to report Steam server connection
+     */
+    protected static void steamServersConnected ()
+    {
+        _steamServerCallbacks.apply(new ObserverList.ObserverOp<SteamServerCallback>() {
+            public boolean apply (SteamServerCallback callback) {
+                callback.steamServersConnected();
+                return true;
+            }
+        });
+    }
+
+    /**
+     * Called from native code to report Steam server disconnection.
+     */
+    protected static void steamServersDisconnected ()
+    {
+        _steamServerCallbacks.apply(new ObserverList.ObserverOp<SteamServerCallback>() {
+            public boolean apply (SteamServerCallback callback) {
+                callback.steamServersDisconnected();
+                return true;
+            }
+        });
+    }
+
+    /**
      * Called from native code to handle a microtransaction auth response.
      */
     protected static void microTxnAuthorizationResponse (
@@ -165,6 +239,9 @@ public class SteamUser
             }
         });
     }
+
+    /** The list of Steam server callback listeners, if initialized. */
+    protected static ObserverList<SteamServerCallback> _steamServerCallbacks;
 
     /** The list of microtransaction callback listeners, if initialized. */
     protected static ObserverList<MicroTxnCallback> _microTxnCallbacks;
