@@ -33,6 +33,14 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isOverlayEnabled
 
 /*
  * Class:     com_threerings_froth_SteamUtils
+ * Method:    overlayNeedsPresent
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_overlayNeedsPresent
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_threerings_froth_SteamUtils
  * Method:    nativeSetOverlayNotificationPosition
  * Signature: (I)V
  */

@@ -48,6 +48,11 @@ public class SteamUtils
     public static native boolean isOverlayEnabled ();
 
     /**
+     * Checks whether the overlay needs a call to Present (Direct3D) or SwapBuffers (OpenGL).
+     */
+    public static native boolean overlayNeedsPresent ();
+
+    /**
      * The actual native overlay position set method.
      */
     protected static native void nativeSetOverlayNotificationPosition (int position);
