@@ -71,7 +71,7 @@
           <show>public</show>
           <links>
             <link>http://samskivert.googlecode.com/svn/apidocs/</link>
-            <link>http://guava-libraries.googlecode.com/svn/trunk/javadoc/</link>
+            <link>http://docs.guava-libraries.googlecode.com/git/javadoc/</link>
             <link>http://evgeny-goldin.org/ant/api/</link>
           </links>
         </configuration>
