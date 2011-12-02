@@ -19,6 +19,14 @@ public class SteamAPI
     }
 
     /**
+     * Checks whether we were able to locate the Steam native library.
+     */
+    public static boolean hasLibrary ()
+    {
+        return _haveLib;
+    }
+
+    /**
      * Checks whether the Steam API was successfully initialized.
      */
     public static boolean isInitialized ()
