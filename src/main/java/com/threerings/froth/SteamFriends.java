@@ -129,6 +129,11 @@ public class SteamFriends
     public static native void activateGameOverlayToWebPage (String url);
 
     /**
+     * Activates the game overlay and opens the identified store page.
+     */
+    public static native void activateGameOverlayToStore (int appId);
+
+    /**
      * Sets a "rich presence" value for friends to see.
      */
     public static native boolean setRichPresence (String key, String value);

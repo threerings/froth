@@ -61,6 +61,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverla
 
 /*
  * Class:     com_threerings_froth_SteamFriends
+ * Method:    activateGameOverlayToStore
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverlayToStore
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     com_threerings_froth_SteamFriends
  * Method:    setRichPresence
  * Signature: (Ljava/lang/String;Ljava/lang/String;)Z
  */

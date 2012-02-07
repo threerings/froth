@@ -58,7 +58,7 @@
   <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
-      <arg line="-o lib/i686-Linux/libfroth.so -shared -lsteam_api"/>
+      <arg line="-m32 -o lib/i686-Linux/libfroth.so -shared -lsteam_api"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/linux"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
