@@ -17,7 +17,7 @@ protected:
 
     STEAM_CALLBACK(DlcInstalledCallback, dlcInstalled,
             DlcInstalled_t, _responseCallback) {
-        jclass clazz = _env->FindClass("com/threerings/froth/SteamApp");
+        jclass clazz = _env->FindClass("com/threerings/froth/SteamApps");
         jmethodID mid = _env->GetStaticMethodID(clazz, "dlcInstalled", "(I)V");
         _env->CallStaticVoidMethod(clazz, mid, (jint)pParam->m_nAppID);
     }
@@ -35,7 +35,7 @@ JNIEXPORT jstring JNICALL Java_com_threerings_froth_SteamApps_getCurrentGameLang
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamApps_isDlcInstalled (
     JNIEnv* env, jclass clazz, jint appId)
 {
-    return SteamApps()->BIsDlcInstalled((uint32)appId);
+    return SteamApps()->BIsDlcInstalled(appId);
 }
 
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamApps_addNativeDlcInstalledCallback (
