@@ -18,7 +18,7 @@ protected:
     STEAM_CALLBACK(DlcInstalledCallback, dlcInstalled,
             DlcInstalled_t, _responseCallback) {
         jclass clazz = _env->FindClass("com/threerings/froth/SteamApps");
-        jmethodID mid = _env->GetStaticMethodID(clazz, "dlcInstalled", "(I)V");
+        jmethodID mid = _env->GetStaticMethodID(clazz, "dlcInstalledResponse", "(I)V");
         _env->CallStaticVoidMethod(clazz, mid, (jint)pParam->m_nAppID);
     }
 
