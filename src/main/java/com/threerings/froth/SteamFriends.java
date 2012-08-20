@@ -12,7 +12,13 @@ public class SteamFriends
 {
     /** The various states a user can be in. */
     public enum PersonaState {
-        OFFLINE, ONLINE, BUSY, AWAY, SNOOZE, LOOKING_TO_TRADE, LOOKING_TO_PLAY };
+        // these values have ordinals that correspond directly to the steam API values
+        OFFLINE, ONLINE, BUSY, AWAY, SNOOZE, LOOKING_TO_TRADE, LOOKING_TO_PLAY,
+
+        // UNKNOWN is added to the end and used for any unknown (newly-added) constants arriving
+        // from steam. If you add more constants in the future they should be added before UNKNOWN.
+        UNKNOWN
+    };
 
     /**
      * Used to communicate activation and deactivation of the game overlay.
@@ -111,7 +117,12 @@ public class SteamFriends
      */
     public static PersonaState getFriendPersonaState (long steamId)
     {
-        return PersonaState.values()[nativeGetFriendPersonaState(steamId)];
+        try {
+            return PersonaState.values()[nativeGetFriendPersonaState(steamId)];
+
+        } catch (Exception e) {
+            return PersonaState.UNKNOWN;
+        }
     }
 
     /**
