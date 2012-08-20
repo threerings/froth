@@ -11,7 +11,8 @@ import com.samskivert.util.ObserverList;
 public class SteamFriends
 {
     /** The various states a user can be in. */
-    public enum PersonaState { OFFLINE, ONLINE, BUSY, AWAY, SNOOZE };
+    public enum PersonaState {
+        OFFLINE, ONLINE, BUSY, AWAY, SNOOZE, LOOKING_TO_TRADE, LOOKING_TO_PLAY };
 
     /**
      * Used to communicate activation and deactivation of the game overlay.
