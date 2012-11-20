@@ -100,16 +100,12 @@ protected:
 };
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeInit (
-    JNIEnv* env, jclass clazz, jint ip, jshort port, jshort gamePort,
-    jshort spectatorPort, jshort queryPort, jint serverMode, jstring gameDir,
-    jstring versionString)
+    JNIEnv* env, jclass clazz, jint ip, jshort steamPort, jshort gamePort,
+    jshort queryPort, jint serverMode, jstring versionString)
 {
-    const char* gameDirChars = env->GetStringUTFChars(gameDir, NULL);
     const char* versionStringChars = env->GetStringUTFChars(versionString, NULL);
     jboolean result = SteamGameServer_Init(
-        ip, port, gamePort, spectatorPort, queryPort,
-        (EServerMode)serverMode, gameDirChars, versionStringChars);
-    env->ReleaseStringUTFChars(gameDir, gameDirChars);
+        ip, steamPort, gamePort, queryPort, (EServerMode)serverMode, versionStringChars);
     env->ReleaseStringUTFChars(versionString, versionStringChars);
     return result;
 }

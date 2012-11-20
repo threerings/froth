@@ -66,12 +66,11 @@ public class SteamGameServer
      * @return whether or not the interface initialized successfully.
      */
     public static boolean init (
-        int ip, short port, short gamePort, short spectatorPort, short queryPort,
-        ServerMode serverMode, String gameDir, String versionString)
+        int ip, short steamPort, short gamePort, short queryPort,
+        ServerMode serverMode, String versionString)
     {
         return (_initialized = SteamAPI._haveLib && nativeInit(
-            ip, port, gamePort, spectatorPort, queryPort,
-            serverMode.ordinal(), gameDir, versionString));
+            ip, steamPort, gamePort, queryPort, serverMode.ordinal(), versionString));
     }
 
     /**
@@ -143,8 +142,8 @@ public class SteamGameServer
      * The actual native initialization method.
      */
     protected static native boolean nativeInit (
-        int ip, short port, short gamePort, short spectatorPort, short queryPort,
-        int serverMode, String gameDir, String versionString);
+        int ip, short steamPort, short gamePort, short queryPort, int serverMode,
+        String versionString);
 
     /**
      * The actual native connect and authenticate method.

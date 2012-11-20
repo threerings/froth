@@ -51,10 +51,10 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_endAuthSession
 /*
  * Class:     com_threerings_froth_SteamGameServer
  * Method:    nativeInit
- * Signature: (ISSSSILjava/lang/String;Ljava/lang/String;)Z
+ * Signature: (ISSSILjava/lang/String;)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeInit
-  (JNIEnv *, jclass, jint, jshort, jshort, jshort, jshort, jint, jstring, jstring);
+  (JNIEnv *, jclass, jint, jshort, jshort, jshort, jint, jstring);
 
 /*
  * Class:     com_threerings_froth_SteamGameServer

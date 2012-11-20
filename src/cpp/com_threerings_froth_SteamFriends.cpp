@@ -90,10 +90,10 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverla
     env->ReleaseStringUTFChars(url, str);
 }
 
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_activateGameOverlayToStore (
-    JNIEnv* env, jclass clazz, jint appId)
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamFriends_nativeActivateGameOverlayToStore (
+    JNIEnv* env, jclass clazz, jint appId, jint flag)
 {
-    SteamFriends()->ActivateGameOverlayToStore((AppId_t)appId);
+    SteamFriends()->ActivateGameOverlayToStore((AppId_t)appId, (EOverlayToStoreFlag)flag);
 }
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamFriends_setRichPresence (

@@ -20,6 +20,11 @@ public class SteamFriends
         UNKNOWN
     };
 
+    /** Different values when opening the store overlay. */
+    public enum OverlayToStoreFlag {
+        NONE, ADD_TO_CART, ADD_TO_CART_AND_SHOW
+    };
+
     /**
      * Used to communicate activation and deactivation of the game overlay.
      */
@@ -143,7 +148,10 @@ public class SteamFriends
     /**
      * Activates the game overlay and opens the identified store page.
      */
-    public static native void activateGameOverlayToStore (int appId);
+    public static void activateGameOverlayToStore (int appId, OverlayToStoreFlag flag)
+    {
+        nativeActivateGameOverlayToStore(appId, flag.ordinal());
+    }
 
     /**
      * Sets a "rich presence" value for friends to see.
@@ -164,6 +172,11 @@ public class SteamFriends
      * The actual native persona state retrieval method.
      */
     protected static native int nativeGetFriendPersonaState (long steamId);
+
+    /**
+     * The actual native activate game overlay to store method.
+     */
+    protected static native void nativeActivateGameOverlayToStore (int appId, int flag);
 
     /**
      * Adds the native game overlay activation callback.
