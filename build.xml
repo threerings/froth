@@ -57,6 +57,8 @@
 
   <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
+    <mkdir dir="${deploy.dir}/lib/MacOS-32"/>
+    <mkdir dir="${deploy.dir}/lib/MacOS-64"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
       <arg line="-m32 -o lib/i686-Linux/libfroth.so -shared -lsteam_api"/>
       <arg value="-I${java.home}/../include"/>
@@ -82,12 +84,27 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m32 -o lib/Universal-MacOS/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-32/libfroth.jnilib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
       <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
+    </apply>
+    <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
+      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-64/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-mmacosx-version-min=10.5"/>
+      <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
+      <arg value="-I${deploy.dir}/sdk/public/steam"/>
+      <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
+      <fileset dir="src/cpp" includes="*.cpp"/>
+    </apply>
+    <apply osfamily="mac" executable="lipo" parallel="true" failonerror="true">
+      <arg line="-create -output lib/Universal-MacOS/libfroth.jnilib"/>
+      <dirset dir="${deploy.dir}">
+        <include name="lib/MacOS-32/*"/>
+        <include name="lib/MacOS-64/*"/>
+      </dirset>
     </apply>
   </target>
 
