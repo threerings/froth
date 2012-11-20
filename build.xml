@@ -100,11 +100,10 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="lipo" parallel="true" failonerror="true">
+      <srcfile/>
       <arg line="-create -output lib/Universal-MacOS/libfroth.jnilib"/>
-      <dirset dir="${deploy.dir}">
-        <include name="lib/MacOS-32/*"/>
-        <include name="lib/MacOS-64/*"/>
-      </dirset>
+      <fileset dir="${deploy.dir}/lib/MacOS-32" includes="*.jnilib"/>
+      <fileset dir="${deploy.dir}/lib/MacOS-64" includes="*.jnilib"/>
     </apply>
   </target>
 
