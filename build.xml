@@ -84,7 +84,7 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-32/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-64/libfroth.jnilib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
@@ -92,7 +92,7 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-64/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-32/libfroth.jnilib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public/steam"/>
