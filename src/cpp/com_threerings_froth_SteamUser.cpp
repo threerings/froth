@@ -48,8 +48,6 @@ protected:
 
     STEAM_CALLBACK(MicroTxnCallback, microTxnAuthorizationResponse,
             MicroTxnAuthorizationResponse_t, _responseCallback) {
-        printf("MicroTxnCallback AppID=%u, OrderID=%llu\n", pParam->m_unAppID, pParam->m_ulOrderID);
-        fflush(stdout);
         jclass clazz = _env->FindClass("com/threerings/froth/SteamUser");
         jmethodID mid = _env->GetStaticMethodID(clazz, "microTxnAuthorizationResponse", "(IJZ)V");
         _env->CallStaticVoidMethod(clazz, mid,
