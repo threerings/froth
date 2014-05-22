@@ -111,4 +111,3 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamNetworking_addNativeSessio
 {
     new SessionConnectCallback(env);
 }
-

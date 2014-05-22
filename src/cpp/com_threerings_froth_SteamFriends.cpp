@@ -64,8 +64,8 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamFriends_getFriendCount (
     return SteamFriends()->GetFriendCount(flags);
 }
 
-JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamFriends_getFriendByIndex
-  (JNIEnv* env, jclass clazz, jint index, jint flags)
+JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamFriends_getFriendByIndex (
+    JNIEnv* env, jclass clazz, jint index, jint flags)
 {
     return SteamFriends()->GetFriendByIndex(index, flags).ConvertToUint64();
 }

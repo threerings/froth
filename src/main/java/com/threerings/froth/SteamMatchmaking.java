@@ -14,7 +14,7 @@ public class SteamMatchmaking
     public enum LobbyType { PRIVATE, FRIENDS_ONLY, PUBLIC, INVISIBLE };
 
     /** Result codes. */
-    public enum Result { OK, NO_CONNECTION, TIMEOUT, FAIL, ACCESS_DENIED, LIMIT_EXCEEDED  };
+    public enum Result { OK, NO_CONNECTION, TIMEOUT, FAIL, ACCESS_DENIED, LIMIT_EXCEEDED };
 
     /** Chat room enter request responses. */
     public enum ChatRoomEnterResponse {

@@ -195,4 +195,3 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_nativeDecompressVoice
     }
     return result;
 }
-

@@ -215,4 +215,3 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamMatchmaking_addNativeGameL
 {
     new GameLobbyJoinRequestCallback(env);
 }
-
