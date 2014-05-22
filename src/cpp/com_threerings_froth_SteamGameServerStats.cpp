@@ -1,7 +1,7 @@
 //
 // $Id$
 
-#include <steam_gameserver.h>
+#include <steam/steam_gameserver.h>
 
 #include "com_threerings_froth_SteamGameServerStats.h"
 

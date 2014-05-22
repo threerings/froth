@@ -1,7 +1,7 @@
 //
 // $Id$
 
-#include <steam_api.h>
+#include <steam/steam_api.h>
 
 #include "com_threerings_froth_SteamAPI.h"
 

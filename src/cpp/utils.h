@@ -7,7 +7,7 @@
 #define UTILS
 
 #include <jni.h>
-#include <steamtypes.h>
+#include <steam/steamtypes.h>
 
 /**
  * Sets the limit of a buffer object.

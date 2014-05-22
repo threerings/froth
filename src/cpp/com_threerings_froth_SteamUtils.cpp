@@ -1,8 +1,8 @@
 //
 // $Id$
 
-#include <steam_api.h>
-#include <steam_gameserver.h>
+#include <steam/steam_api.h>
+#include <steam/steam_gameserver.h>
 
 #include "com_threerings_froth_SteamUtils.h"
 
