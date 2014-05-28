@@ -13,29 +13,6 @@ public class SteamController
     /** The maximum number of controllers supported. Copied from isteamcontroller.h. */
     public static final int MAX_STEAM_CONTROLLERS = 16;
 
-    /** Button/action bitfields. Copied from isteamcontroller.h. */
-    public static final long RIGHT_TRIGGER_MASK            = 0x0000000000000001L;
-    public static final long LEFT_TRIGGER_MASK             = 0x0000000000000002L;
-    public static final long RIGHT_BUMPER_MASK             = 0x0000000000000004L;
-    public static final long LEFT_BUMPER_MASK              = 0x0000000000000008L;
-    public static final long BUTTON_0_MASK                 = 0x0000000000000010L;
-    public static final long BUTTON_1_MASK                 = 0x0000000000000020L;
-    public static final long BUTTON_2_MASK                 = 0x0000000000000040L;
-    public static final long BUTTON_3_MASK                 = 0x0000000000000080L;
-    public static final long TOUCH_0_MASK                  = 0x0000000000000100L;
-    public static final long TOUCH_1_MASK                  = 0x0000000000000200L;
-    public static final long TOUCH_2_MASK                  = 0x0000000000000400L;
-    public static final long TOUCH_3_MASK                  = 0x0000000000000800L;
-    public static final long BUTTON_MENU_MASK              = 0x0000000000001000L;
-    public static final long BUTTON_STEAM_MASK             = 0x0000000000002000L;
-    public static final long BUTTON_ESCAPE_MASK            = 0x0000000000004000L;
-    public static final long BUTTON_BACK_LEFT_MASK         = 0x0000000000008000L;
-    public static final long BUTTON_BACK_RIGHT_MASK        = 0x0000000000010000L;
-    public static final long BUTTON_LEFTPAD_CLICKED_MASK   = 0x0000000000020000L;
-    public static final long BUTTON_RIGHTPAD_CLICKED_MASK  = 0x0000000000040000L;
-    public static final long LEFTPAD_FINGERDOWN_MASK       = 0x0000000000080000L;
-    public static final long RIGHTPAD_FINGERDOWN_MASK      = 0x0000000000100000L;
-
     /**
      * The controller buttons.
      */
