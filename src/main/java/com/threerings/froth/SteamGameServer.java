@@ -57,7 +57,7 @@ public class SteamGameServer
         /**
          * Contains the response to a request to validate an auth ticket.
          */
-	    public void validateAuthTicketResponse (AuthSessionResponse authSessionResponse);
+        public void validateAuthTicketResponse (AuthSessionResponse authSessionResponse);
     }
 
     /**
