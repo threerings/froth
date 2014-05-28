@@ -39,6 +39,14 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControll
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode
   (JNIEnv *, jclass, jstring);
 
+/*
+ * Class:     com_threerings_froth_SteamController
+ * Method:    nativeTriggerHapticPulse
+ * Signature: (IIS)V
+ */
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nativeTriggerHapticPulse
+  (JNIEnv *, jclass, jint, jint, jshort);
+
 #ifdef __cplusplus
 }
 #endif

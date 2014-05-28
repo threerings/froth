@@ -11,13 +11,13 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init (
     const char* str = env->GetStringUTFChars(file, NULL);
     bool retval = SteamController()->Init(str);
     env->ReleaseStringUTFChars(file, str);
-    return retval;
+    return (jboolean)retval;
 }
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_shutdown (
     JNIEnv* env, jclass clazz)
 {
-    return SteamController()->Shutdown();
+    return (jboolean)SteamController()->Shutdown();
 }
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControllerState (
@@ -25,7 +25,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControll
 {
     // TODO: NULL should be the state. this will boo-boo-boooch
     bool retval = SteamController()->GetControllerState((uint32)controller, NULL);
-    return retval;
+    return (jboolean)retval;
 }
 
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode (
@@ -34,4 +34,11 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode
     const char* modeStr = env->GetStringUTFChars(mode, NULL);
     SteamController()->SetOverrideMode(modeStr);
     env->ReleaseStringUTFChars(mode, modeStr);
+}
+
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nativeTriggerHapticPulse (
+    JNIEnv* env, jclass clazz, jint controller, jint pad, jshort duration)
+{
+    SteamController()->TriggerHapticPulse(
+        (uint32)controller, (ESteamControllerPad)pad, (unsigned short)duration);
 }
