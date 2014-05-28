@@ -1,7 +1,7 @@
 //
 // $Id$
 
-#include <steam/isteamcontroller.h>
+#include <steam/steam_api.h>
 
 #include "com_threerings_froth_SteamController.h"
 
@@ -9,7 +9,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init (
     JNIEnv* env, jclass clazz, jstring file)
 {
     const char* str = env->GetStringUTFChars(file, NULL);
-    bool retval = SteamController()->Init();
+    bool retval = SteamController()->Init(str);
     env->ReleaseStringUTFChars(file, str);
     return retval;
 }
@@ -29,7 +29,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControll
 }
 
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode (
-    JNIEnv* env, jclass clazz, jstring mode);
+    JNIEnv* env, jclass clazz, jstring mode)
 {
     const char* modeStr = env->GetStringUTFChars(mode, NULL);
     SteamController()->SetOverrideMode(modeStr);
