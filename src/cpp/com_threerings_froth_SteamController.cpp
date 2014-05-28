@@ -23,7 +23,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_shutdown (
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControllerState (
     JNIEnv* env, jclass clazz, jint controller, jobject state)
 {
-    SteamControllerState_t controllerState;
+    SteamControllerState_t controllerState; // on the stack
     bool retval = SteamController()->GetControllerState((uint32)controller, &controllerState);
     if (retval) {
         // TODO: make this all pre-cached for the fasterness?
