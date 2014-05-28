@@ -155,7 +155,7 @@ public class SteamController
      * Get the state.
      *
      * @param index the controller index, usually 0.
-     * @param State the state to be filled-in.
+     * @param state the state to be filled-in.
      *
      * @return true on success.
      */
