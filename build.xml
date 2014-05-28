@@ -135,6 +135,7 @@
       <classpath refid="built.classpath"/>
       <class name="com.threerings.froth.SteamAPI"/>
       <class name="com.threerings.froth.SteamApps"/>
+      <class name="com.threerings.froth.SteamController"/>
       <class name="com.threerings.froth.SteamFriends"/>
       <class name="com.threerings.froth.SteamGameServer"/>
       <class name="com.threerings.froth.SteamGameServerStats"/>
