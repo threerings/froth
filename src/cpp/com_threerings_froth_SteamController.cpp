@@ -5,6 +5,9 @@
 
 #include "com_threerings_froth_SteamController.h"
 
+/** A static, reusabled controller state object. */
+static SteamControllerState_t _controllerState;
+
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init (
     JNIEnv* env, jclass clazz, jstring file)
 {
@@ -23,8 +26,19 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_shutdown (
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControllerState (
     JNIEnv* env, jclass clazz, jint controller, jobject state)
 {
-    // TODO: NULL should be the state. this will boo-boo-boooch
-    bool retval = SteamController()->GetControllerState((uint32)controller, NULL);
+    bool retval = SteamController()->GetControllerState((uint32)controller, &_controllerState);
+    if (retval) {
+        // TODO: make this all pre-cached for the fasterness?
+        jclass stateClazz = env->FindClass("com/threerings/froth/SteamController$State");
+        jmethodID stateSet = env->GetMethodID(stateClazz, "setValues", "(IJSSSS)V");
+        env->CallVoidMethod(state, stateSet,
+                _controllerState.unPacketNum,
+                _controllerState.ulButtons,
+                _controllerState.sLeftPadX,
+                _controllerState.sLeftPadY,
+                _controllerState.sRightPadX,
+                _controllerState.sRightPadY);
+    }
     return (jboolean)retval;
 }
 
