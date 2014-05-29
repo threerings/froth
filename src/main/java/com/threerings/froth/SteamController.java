@@ -142,14 +142,33 @@ public class SteamController
      *
      * @return true on success.
      */
-    public static native boolean init (String configFilePath);
+    public static boolean init (String configFilePath)
+    {
+        _initialized = SteamAPI.isSteamRunning() && nInit(configFilePath);
+        return _initialized;
+    }
 
     /**
      * Shutdown the steam controller.
      *
      * @return true on success.
      */
-    public static native boolean shutdown ();
+    public static boolean shutdown ()
+    {
+        if (_initialized && nShutdown()) {
+            _initialized = false;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Do we have a controller available at the specified index?
+     */
+    public static boolean hasController (int index)
+    {
+        return _initialized && nGetControllerState(index, null);
+    }
 
     /**
      * Get the state.
@@ -159,7 +178,13 @@ public class SteamController
      *
      * @return true on success.
      */
-    public static native boolean getControllerState (int index, State state);
+    public static boolean getControllerState (int index, State state)
+    {
+        if (state == null) {
+            throw new NullPointerException();
+        }
+        return _initialized && nGetControllerState(index, state);
+    }
 
     /**
      * Trigger a haptic pulse.
@@ -170,19 +195,41 @@ public class SteamController
      */
     public static void triggerHapticPulse (int index, Pad pad, short durationMicroSec)
     {
-        nativeTriggerHapticPulse(index, pad.ordinal(), durationMicroSec);
+        if (_initialized) {
+            nTriggerHapticPulse(index, pad.ordinal(), durationMicroSec);
+        }
     }
 
     /**
      * Set the mode to use, from the configuration file.
      *
-     * @param mode the name of a mode from the vdf file's "mode_overrides" section.
+     * @param mode the name of a mode from the vdf file's "mode_overrides" section, or "" to reset.
      */
-    public static native void setOverrideMode (String mode);
+    public static void setOverrideMode (String mode)
+    {
+        if (mode == null) {
+            throw new NullPointerException();
+        }
+        if (_initialized) {
+            nSetOverrideMode(mode);
+        }
+    }
 
-    /**
-     * The native implementation of triggerHapticPulse.
-     */
-    protected static native void nativeTriggerHapticPulse (
-            int index, int pad, short durationMicroSec);
+    /** Native: init. */
+    protected static native boolean nInit (String configFilePath);
+
+    /** Native: shutdown. */
+    protected static native boolean nShutdown ();
+
+    /** Native: getControllerState. */
+    protected static native boolean nGetControllerState (int index, State state);
+
+    /** Native: triggerHapticPulse. */
+    protected static native void nTriggerHapticPulse (int index, int pad, short durationMicroSec);
+
+    /** Native: setOverrideMode. */
+    protected static native void nSetOverrideMode (String mode);
+
+    /** Are we initialized? */
+    protected static boolean _initialized;
 }

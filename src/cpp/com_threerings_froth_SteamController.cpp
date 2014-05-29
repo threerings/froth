@@ -5,7 +5,7 @@
 
 #include "com_threerings_froth_SteamController.h"
 
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init (
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nInit (
     JNIEnv* env, jclass clazz, jstring file)
 {
     const char* str = env->GetStringUTFChars(file, NULL);
@@ -14,18 +14,19 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init (
     return (jboolean)retval;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_shutdown (
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nShutdown (
     JNIEnv* env, jclass clazz)
 {
     return (jboolean)SteamController()->Shutdown();
 }
 
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControllerState (
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nGetControllerState (
     JNIEnv* env, jclass clazz, jint controller, jobject state)
 {
     SteamControllerState_t controllerState; // on the stack
     bool retval = SteamController()->GetControllerState((uint32)controller, &controllerState);
-    if (retval) {
+    // we allow state to be null for our 'hasController' method
+    if (retval && state != NULL) {
         // TODO: make this all pre-cached for the fasterness?
         jclass stateClazz = env->FindClass("com/threerings/froth/SteamController$State");
         jmethodID stateSet = env->GetMethodID(stateClazz, "setValues", "(IJSSSS)V");
@@ -40,7 +41,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControll
     return (jboolean)retval;
 }
 
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode (
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nSetOverrideMode (
     JNIEnv* env, jclass clazz, jstring mode)
 {
     const char* modeStr = env->GetStringUTFChars(mode, NULL);
@@ -48,7 +49,7 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode
     env->ReleaseStringUTFChars(mode, modeStr);
 }
 
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nativeTriggerHapticPulse (
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nTriggerHapticPulse (
     JNIEnv* env, jclass clazz, jint controller, jint pad, jshort duration)
 {
     SteamController()->TriggerHapticPulse(

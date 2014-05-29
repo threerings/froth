@@ -9,45 +9,46 @@ extern "C" {
 #endif
 #undef com_threerings_froth_SteamController_MAX_STEAM_CONTROLLERS
 #define com_threerings_froth_SteamController_MAX_STEAM_CONTROLLERS 16L
+/* Inaccessible static: _initialized */
 /*
  * Class:     com_threerings_froth_SteamController
- * Method:    init
+ * Method:    nInit
  * Signature: (Ljava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_init
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nInit
   (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     com_threerings_froth_SteamController
- * Method:    shutdown
+ * Method:    nShutdown
  * Signature: ()Z
  */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_shutdown
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nShutdown
   (JNIEnv *, jclass);
 
 /*
  * Class:     com_threerings_froth_SteamController
- * Method:    getControllerState
+ * Method:    nGetControllerState
  * Signature: (ILcom/threerings/froth/SteamController$State;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_getControllerState
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nGetControllerState
   (JNIEnv *, jclass, jint, jobject);
 
 /*
  * Class:     com_threerings_froth_SteamController
- * Method:    setOverrideMode
- * Signature: (Ljava/lang/String;)V
+ * Method:    nTriggerHapticPulse
+ * Signature: (IIS)V
  */
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_setOverrideMode
-  (JNIEnv *, jclass, jstring);
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nTriggerHapticPulse
+  (JNIEnv *, jclass, jint, jint, jshort);
 
 /*
  * Class:     com_threerings_froth_SteamController
- * Method:    nativeTriggerHapticPulse
- * Signature: (IIS)V
+ * Method:    nSetOverrideMode
+ * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nativeTriggerHapticPulse
-  (JNIEnv *, jclass, jint, jint, jshort);
+JNIEXPORT void JNICALL Java_com_threerings_froth_SteamController_nSetOverrideMode
+  (JNIEnv *, jclass, jstring);
 
 #ifdef __cplusplus
 }
