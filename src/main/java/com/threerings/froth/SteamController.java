@@ -18,6 +18,7 @@ public class SteamController
      */
     public enum Button
     {
+        // Note: These constants correspond to the button constants in native code. Do not reorder!
         RIGHT_TRIGGER,
         LEFT_TRIGGER,
         RIGHT_BUMPER,
@@ -39,6 +40,7 @@ public class SteamController
         BUTTON_RIGHTPAD_CLICKED,
         LEFTPAD_FINGERDOWN,
         RIGHTPAD_FINGERDOWN,
+        // Note: These constants correspond to the button constants in native code. Do not reorder!
         ;
 
         /**
@@ -55,8 +57,10 @@ public class SteamController
      */
     public enum Pad
     {
+        // Note: These constants correspond to the pad constants in native code. Do not reorder!
         LEFT,
         RIGHT,
+        // Note: These constants correspond to the pad constants in native code. Do not reorder!
         ;
     }
 
