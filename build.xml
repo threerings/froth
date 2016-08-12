@@ -86,7 +86,7 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-64/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-64/libfroth.dylib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
@@ -94,7 +94,7 @@
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-32/libfroth.jnilib -bundle -lsteam_api"/>
+      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-32/libfroth.dylib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
       <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
@@ -103,9 +103,9 @@
     </apply>
     <apply osfamily="mac" executable="lipo" parallel="true" failonerror="true">
       <srcfile/>
-      <arg line="-create -output lib/Universal-MacOS/libfroth.jnilib"/>
-      <fileset dir="${deploy.dir}/lib/MacOS-32" includes="*.jnilib"/>
-      <fileset dir="${deploy.dir}/lib/MacOS-64" includes="*.jnilib"/>
+      <arg line="-create -output lib/Universal-MacOS/libfroth.dylib"/>
+      <fileset dir="${deploy.dir}/lib/MacOS-32" includes="*.dylib"/>
+      <fileset dir="${deploy.dir}/lib/MacOS-64" includes="*.dylib"/>
     </apply>
   </target>
 
