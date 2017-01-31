@@ -29,7 +29,7 @@
       <path refid="compile.classpath"/>
       <pathelement location="${classes.dir}"/>
     </path>
-    <unzip src="lib/steamworks_sdk_137.zip" dest="${deploy.dir}" overwrite="false">
+    <unzip src="lib/steamworks_sdk_139.zip" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
   </target>
@@ -88,7 +88,8 @@
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
       <arg line="-m64 -o ${deploy.dir}/lib/MacOS-64/libfroth.dylib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
-      <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
+      <arg value="-I${java.home}/../include"/>
+      <arg value="-I${java.home}/../include/darwin"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
       <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
@@ -96,7 +97,8 @@
     <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
       <arg line="-m32 -o ${deploy.dir}/lib/MacOS-32/libfroth.dylib -bundle -lsteam_api"/>
       <arg line="-mmacosx-version-min=10.5"/>
-      <arg value="-I/System/Library/Frameworks/JavaVM.framework/Headers"/>
+      <arg value="-I${java.home}/../include"/>
+      <arg value="-I${java.home}/../include/darwin"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
       <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
