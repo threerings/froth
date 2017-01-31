@@ -32,6 +32,10 @@
     <unzip src="lib/steamworks_sdk_139.zip" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
+    <mkdir dir="${deploy.dir}/api129"/>
+    <unzip src="lib/steamworks_sdk_129a.zip" dest="${deploy.dir}/api129" overwrite="false">
+      <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
+    </unzip>
   </target>
 
   <target name="clean" description="Cleans out build results">
@@ -155,11 +159,11 @@
       <fileset dir="lib" excludes="*.zip"/>
     </copy>
     <copy todir="${deploy.dir}/natives/i686-Windows">
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin" includes="*.dll"/>
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin/win64" includes="*.dll"/>
+      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin" includes="*.dll"/>
+      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin/win64" includes="*.dll"/>
     </copy>
     <copy todir="${deploy.dir}/natives/i686-Linux">
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin/linux32" includes="*.so"/>
+      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin/linux32" includes="*.so"/>
     </copy>
     <copy todir="${deploy.dir}/natives/Universal-MacOS">
       <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx32" includes="*.dylib"/>
