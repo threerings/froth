@@ -29,11 +29,7 @@
       <path refid="compile.classpath"/>
       <pathelement location="${classes.dir}"/>
     </path>
-    <unzip src="lib/steamworks_sdk_139.zip" dest="${deploy.dir}" overwrite="false">
-      <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
-    </unzip>
-    <mkdir dir="${deploy.dir}/api129"/>
-    <unzip src="lib/steamworks_sdk_129a.zip" dest="${deploy.dir}/api129" overwrite="false">
+    <unzip src="lib/steamworks_sdk_161.zip" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
   </target>
@@ -52,7 +48,7 @@
     <mkdir dir="${classes.dir}"/>
     <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false"
            debug="on" optimize="${build.optimize}" deprecation="on"
-           source="1.5" target="1.5">
+           source="10" target="10">
       <classpath refid="compile.classpath"/>
       <compilerarg value="-Xlint"/>
       <compilerarg value="-Xlint:-serial"/>
@@ -61,8 +57,7 @@
 
   <target name="nativecompile" depends="-prepare" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
-    <mkdir dir="${deploy.dir}/lib/MacOS-32"/>
-    <mkdir dir="${deploy.dir}/lib/MacOS-64"/>
+    <mkdir dir="${deploy.dir}/lib/MacOS"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
       <arg line="-m32 -fPIC -o lib/i686-Linux/libfroth.so -shared -Wl,--no-undefined"/>
       <arg value="-I${java.home}/../include"/>
@@ -89,29 +84,20 @@
       <arg value="${deploy.dir}/sdk/redistributable_bin/win64/steam_api64.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
-    <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m64 -o ${deploy.dir}/lib/MacOS-64/libfroth.dylib -bundle -lsteam_api"/>
-      <arg line="-mmacosx-version-min=10.5"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/darwin"/>
+    <apply osfamily="mac" executable="clang++" parallel="true" failonerror="true">
+      <arg line="-o ${deploy.dir}/lib/MacOS/libfroth.dylib -bundle -lsteam_api"/>
+      <arg line="-std=c++17 -arch arm64 -arch x86_64"/>
+      <arg line="-mmacosx-version-min=10.13"/>
+      <arg value="-I${java.home}/include"/>
+      <arg value="-I${java.home}/include/darwin"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
-      <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
-      <fileset dir="src/cpp" includes="*.cpp"/>
-    </apply>
-    <apply osfamily="mac" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m32 -o ${deploy.dir}/lib/MacOS-32/libfroth.dylib -bundle -lsteam_api"/>
-      <arg line="-mmacosx-version-min=10.5"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/darwin"/>
-      <arg value="-I${deploy.dir}/sdk/public"/>
-      <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx32"/>
+      <arg value="-L${deploy.dir}/sdk/redistributable_bin/osx"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
     </apply>
     <apply osfamily="mac" executable="lipo" parallel="true" failonerror="true">
       <srcfile/>
       <arg line="-create -output lib/Universal-MacOS/libfroth.dylib"/>
-      <fileset dir="${deploy.dir}/lib/MacOS-32" includes="*.dylib"/>
-      <fileset dir="${deploy.dir}/lib/MacOS-64" includes="*.dylib"/>
+      <fileset dir="${deploy.dir}/lib/MacOS" includes="*.dylib"/>
     </apply>
   </target>
 
@@ -159,11 +145,11 @@
       <fileset dir="lib" excludes="*.zip"/>
     </copy>
     <copy todir="${deploy.dir}/natives/i686-Windows">
-      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin" includes="*.dll"/>
-      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin/win64" includes="*.dll"/>
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin" includes="*.dll"/>
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/win64" includes="*.dll"/>
     </copy>
     <copy todir="${deploy.dir}/natives/i686-Linux">
-      <fileset dir="${deploy.dir}/api129/sdk/redistributable_bin/linux32" includes="*.so"/>
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/linux32" includes="*.so"/>
     </copy>
     <copy todir="${deploy.dir}/natives/Universal-MacOS">
       <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx32" includes="*.dylib"/>
