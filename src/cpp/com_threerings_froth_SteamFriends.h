@@ -9,8 +9,6 @@ extern "C" {
 #endif
 #undef com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE
 #define com_threerings_froth_SteamFriends_FRIEND_FLAG_IMMEDIATE 4L
-/* Inaccessible static: _gameOverlayActivationCallbacks */
-/* Inaccessible static: _gameRichPresenceJoinRequestCallbacks */
 /*
  * Class:     com_threerings_froth_SteamFriends
  * Method:    getPersonaName

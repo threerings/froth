@@ -9,7 +9,6 @@ extern "C" {
 #endif
 #undef com_threerings_froth_SteamController_MAX_STEAM_CONTROLLERS
 #define com_threerings_froth_SteamController_MAX_STEAM_CONTROLLERS 16L
-/* Inaccessible static: _initialized */
 /*
  * Class:     com_threerings_froth_SteamController
  * Method:    nInit
@@ -29,7 +28,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nShutdown
 /*
  * Class:     com_threerings_froth_SteamController
  * Method:    nGetControllerState
- * Signature: (ILcom/threerings/froth/SteamController$State;)Z
+ * Signature: (ILcom/threerings/froth/SteamController/State;)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamController_nGetControllerState
   (JNIEnv *, jclass, jint, jobject);

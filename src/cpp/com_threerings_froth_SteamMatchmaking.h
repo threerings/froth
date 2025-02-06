@@ -7,11 +7,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/* Inaccessible static: _gameLobbyJoinRequestCallbacks */
 /*
  * Class:     com_threerings_froth_SteamMatchmaking
  * Method:    joinLobby
- * Signature: (JLcom/threerings/froth/SteamMatchmaking$EnterLobbyCallback;)V
+ * Signature: (JLcom/threerings/froth/SteamMatchmaking/EnterLobbyCallback;)V
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamMatchmaking_joinLobby
   (JNIEnv *, jclass, jlong, jobject);
@@ -51,7 +50,7 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamMatchmaking_setLobbyDa
 /*
  * Class:     com_threerings_froth_SteamMatchmaking
  * Method:    nativeCreateLobby
- * Signature: (IILcom/threerings/froth/SteamMatchmaking$CreateLobbyCallback;)V
+ * Signature: (IILcom/threerings/froth/SteamMatchmaking/CreateLobbyCallback;)V
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamMatchmaking_nativeCreateLobby
   (JNIEnv *, jclass, jint, jint, jobject);

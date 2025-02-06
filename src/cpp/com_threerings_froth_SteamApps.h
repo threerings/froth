@@ -7,7 +7,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/* Inaccessible static: _dlcInstalledCallbacks */
 /*
  * Class:     com_threerings_froth_SteamApps
  * Method:    getCurrentGameLanguage

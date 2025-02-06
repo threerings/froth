@@ -18,7 +18,7 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUtils_getAppID
 /*
  * Class:     com_threerings_froth_SteamUtils
  * Method:    setWarningMessageHook
- * Signature: (Lcom/threerings/froth/SteamUtils$WarningMessageHook;)V
+ * Signature: (Lcom/threerings/froth/SteamUtils/WarningMessageHook;)V
  */
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_setWarningMessageHook
   (JNIEnv *, jclass, jobject);
