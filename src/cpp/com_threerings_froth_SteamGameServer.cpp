@@ -100,12 +100,12 @@ protected:
 };
 
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeInit (
-    JNIEnv* env, jclass clazz, jint ip, jshort steamPort, jshort gamePort,
+    JNIEnv* env, jclass clazz, jint ip, jshort gamePort,
     jshort queryPort, jint serverMode, jstring versionString)
 {
     const char* versionStringChars = env->GetStringUTFChars(versionString, NULL);
     jboolean result = SteamGameServer_Init(
-        ip, steamPort, gamePort, queryPort, (EServerMode)serverMode, versionStringChars);
+        ip, gamePort, queryPort, (EServerMode)serverMode, versionStringChars);
     env->ReleaseStringUTFChars(versionString, versionStringChars);
     return result;
 }
@@ -120,25 +120,6 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_runCallbacks (
     JNIEnv* env, jclass clazz)
 {
     SteamGameServer_RunCallbacks();
-}
-
-JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamGameServer_nativeSendUserConnectAndAuthenticate (
-    JNIEnv* env, jclass clazz, jint clientIp, jobject authBlob, jobject steamId, jobject callback)
-{
-    CSteamID* steamIdAddr = (CSteamID*)env->GetDirectBufferAddress(steamId);
-    jboolean result = SteamGameServer()->SendUserConnectAndAuthenticate(
-        clientIp, env->GetDirectBufferAddress(authBlob),
-        getBufferLimit(env, authBlob), steamIdAddr);
-    if (result) {
-        new AuthenticateCallback(env, *steamIdAddr, callback);
-    }
-    return result;
-}
-
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamGameServer_sendUserDisconnect (
-    JNIEnv* env, jclass clazz, jlong steamId)
-{
-    SteamGameServer()->SendUserDisconnect(CSteamID((uint64)steamId));
 }
 
 JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamGameServer_nativeBeginAuthSession (

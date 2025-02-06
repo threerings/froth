@@ -66,11 +66,10 @@ public class SteamGameServer
      * @return whether or not the interface initialized successfully.
      */
     public static boolean init (
-        int ip, short steamPort, short gamePort, short queryPort,
-        ServerMode serverMode, String versionString)
+        int ip, short gamePort, short queryPort, ServerMode serverMode, String versionString)
     {
         return (_initialized = SteamAPI._haveLib && nativeInit(
-            ip, steamPort, gamePort, queryPort, serverMode.ordinal(), versionString));
+            ip, gamePort, queryPort, serverMode.ordinal(), versionString));
     }
 
     /**
@@ -97,28 +96,6 @@ public class SteamGameServer
     public static native long getSteamID ();
 
     /**
-     * Requests to authenticate a user.
-     */
-    public static boolean sendUserConnectAndAuthenticate (
-        int clientIp, ByteBuffer authBlob, LongBuffer steamId, final AuthenticateCallback callback)
-    {
-        return nativeSendUserConnectAndAuthenticate(
-                clientIp, authBlob, steamId, new NativeAuthenticateCallback() {
-            public void clientApprove () {
-                callback.clientApprove();
-            }
-            public void clientDeny (int denyReason, String optionalText) {
-                callback.clientDeny(DenyReason.values()[denyReason], optionalText);
-            }
-        });
-    }
-
-    /**
-     * Notes that the identified user has disconnected.
-     */
-    public static native void sendUserDisconnect (long steamId);
-
-    /**
      * Attempts to begin an auth session.
      */
     public static BeginAuthSessionResult beginAuthSession (
@@ -142,37 +119,13 @@ public class SteamGameServer
      * The actual native initialization method.
      */
     protected static native boolean nativeInit (
-        int ip, short steamPort, short gamePort, short queryPort, int serverMode,
-        String versionString);
-
-    /**
-     * The actual native connect and authenticate method.
-     */
-    protected static native boolean nativeSendUserConnectAndAuthenticate (
-        int clientIp, ByteBuffer authBlob, LongBuffer steamId,
-        NativeAuthenticateCallback callback);
+        int ip, short gamePort, short queryPort, int serverMode, String versionString);
 
     /**
      * The actual native auth session begin method.
      */
     protected static native int nativeBeginAuthSession (
         ByteBuffer ticket, long steamId, NativeAuthSessionCallback callback);
-
-    /**
-     * Native equivalent of {@link AuthenticateCallback}.
-     */
-    protected interface NativeAuthenticateCallback
-    {
-        /**
-         * Indicates that a client's request to authenticate was approved.
-         */
-        public void clientApprove ();
-
-        /**
-         * Indicates that a client's request to authenticate was denied.
-         */
-        public void clientDeny (int denyReason, String optionalText);
-    }
 
     /**
      * Native equivalent of {@link AuthSessionCallback}.

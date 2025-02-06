@@ -70,25 +70,6 @@ JNIEXPORT jlong JNICALL Java_com_threerings_froth_SteamUser_getSteamID (
     return SteamUser()->GetSteamID().ConvertToUint64();
 }
 
-JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_initiateGameConnection (
-    JNIEnv* env, jclass clazz, jobject authBlob, jlong gameServerSteamId,
-    jint serverIp, jshort serverPort, jboolean secure)
-{
-    uint32 length = SteamUser()->InitiateGameConnection(
-        env->GetDirectBufferAddress(authBlob),
-        env->GetDirectBufferCapacity(authBlob),
-        CSteamID((uint64)gameServerSteamId),
-        serverIp, serverPort, secure);
-    setBufferLimit(env, authBlob, length);
-    return length;
-}
-
-JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_terminateGameConnection (
-    JNIEnv* env, jclass clazz, jint serverIp, jshort serverPort)
-{
-    return SteamUser()->TerminateGameConnection(serverIp, serverPort);
-}
-
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUser_startVoiceRecording (
     JNIEnv* env, jclass clazz)
 {
@@ -114,7 +95,7 @@ JNIEXPORT jint JNICALL Java_com_threerings_froth_SteamUser_getAuthSessionTicket 
     HAuthTicket ticketId = SteamUser()->GetAuthSessionTicket(
         env->GetDirectBufferAddress(ticket),
         env->GetDirectBufferCapacity(ticket),
-        &length);
+        &length, 0);
     setBufferLimit(env, ticket, length);
     return ticketId;
 }
