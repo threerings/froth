@@ -1,5 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <project name="froth" default="compile" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+  <property name="steamworks.sdk" value="steamworks_sdk_161.zip"/>
+
   <property name="src.dir"      value="src/main/java"/>
   <property name="deploy.dir"   value="dist"/>
   <property name="classes.dir"  value="${deploy.dir}/classes"/>
@@ -32,7 +34,7 @@
   </target>
 
   <target name="-unpack-sdk" depends="-prepare">
-    <unzip src="lib/steamworks_sdk_161.zip" dest="${deploy.dir}" overwrite="false">
+    <unzip src="lib/${steamworks.sdk}" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
   </target>
