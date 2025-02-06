@@ -64,27 +64,19 @@
     <mkdir dir="${deploy.dir}/lib"/>
     <mkdir dir="${deploy.dir}/lib/MacOS"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
-      <arg line="-m32 -fPIC -o lib/i686-Linux/libfroth.so -shared -Wl,--no-undefined"/>
+      <arg line="-m64 -fPIC -o lib/x86_64-Linux/libfroth.so -shared -Wl,--no-undefined"/>
       <arg value="-I${java.home}/../include"/>
       <arg value="-I${java.home}/../include/linux"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
-      <arg value="-L${deploy.dir}/sdk/redistributable_bin/linux32"/>
+      <arg value="-L${deploy.dir}/sdk/redistributable_bin/linux64"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
       <srcfile/>
       <arg value="-lsteam_api"/>
     </apply>
-    <apply osfamily="windows" executable="SetEnv.cmd" parallel="true" failonerror="true">
-      <arg line="/x86 &amp;&amp; cl -Felib/i686-Windows/froth.dll -LD"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/win32"/>
-      <arg value="-I${deploy.dir}/sdk/public"/>
-      <arg value="${deploy.dir}/sdk/redistributable_bin/steam_api.lib"/>
-      <fileset dir="src/cpp" includes="*.cpp"/>
-    </apply>
     <apply osfamily="windows" executable="SetEnv.Cmd" parallel="true" failonerror="true">
-      <arg line="/x64 &amp;&amp; cl -Felib/i686-Windows/froth64.dll -LD"/>
+      <arg line="/x64 &amp;&amp; cl -Felib/x64_64-Windows/froth64.dll -LD"/>
       <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/win32"/>
+      <arg value="-I${java.home}/../include/win64"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
       <arg value="${deploy.dir}/sdk/redistributable_bin/win64/steam_api64.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
@@ -131,15 +123,14 @@
     <copy todir="${deploy.dir}/natives">
       <fileset dir="lib" excludes="*.zip"/>
     </copy>
-    <copy todir="${deploy.dir}/natives/i686-Windows">
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin" includes="*.dll"/>
+    <copy todir="${deploy.dir}/natives/x86_64-Windows">
       <fileset dir="${deploy.dir}/sdk/redistributable_bin/win64" includes="*.dll"/>
     </copy>
-    <copy todir="${deploy.dir}/natives/i686-Linux">
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin/linux32" includes="*.so"/>
+    <copy todir="${deploy.dir}/natives/x86_64-Linux">
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/linux64" includes="*.so"/>
     </copy>
     <copy todir="${deploy.dir}/natives/Universal-MacOS">
-      <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx32" includes="*.dylib"/>
+      <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx" includes="*.dylib"/>
     </copy>
     <jar basedir="${deploy.dir}/natives" destfile="${deploy.dir}/${ant.project.name}-natives.jar"/>
     <jar basedir="${deploy.dir}/sdk/tools" destfile="${deploy.dir}/${ant.project.name}-tools.jar"/>
