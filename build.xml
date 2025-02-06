@@ -29,6 +29,9 @@
       <path refid="compile.classpath"/>
       <pathelement location="${classes.dir}"/>
     </path>
+  </target>
+
+  <target name="-unpack-sdk" depends="-prepare">
     <unzip src="lib/steamworks_sdk_161.zip" dest="${deploy.dir}" overwrite="false">
       <patternset includes="sdk/public/steam/**, sdk/redistributable_bin/**, sdk/tools/**"/>
     </unzip>
@@ -47,7 +50,7 @@
   <target name="compile" depends="-prepare" description="Builds the Java code.">
     <mkdir dir="${classes.dir}"/>
     <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false"
-           debug="on" optimize="${build.optimize}" deprecation="on"
+           debug="on" optimize="${build.optimize}" deprecation="on" nativeHeaderDir="src/cpp"
            source="10" target="10">
       <classpath refid="compile.classpath"/>
       <compilerarg value="-Xlint"/>
@@ -55,7 +58,7 @@
     </javac>
   </target>
 
-  <target name="nativecompile" depends="-prepare" description="Builds the native code.">
+  <target name="nativecompile" depends="-unpack-sdk" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
     <mkdir dir="${deploy.dir}/lib/MacOS"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
@@ -118,24 +121,6 @@
     <jar destfile="${deploy.dir}/${ant.project.name}.jar">
       <fileset dir="${classes.dir}" includes="com/**"/>
     </jar>
-  </target>
-
-  <target name="genheaders" depends="compile"
-          description="Generates JNI header files">
-    <!-- now generate the header files -->
-    <javah destdir="src/cpp">
-      <classpath refid="built.classpath"/>
-      <class name="com.threerings.froth.SteamAPI"/>
-      <class name="com.threerings.froth.SteamApps"/>
-      <class name="com.threerings.froth.SteamController"/>
-      <class name="com.threerings.froth.SteamFriends"/>
-      <class name="com.threerings.froth.SteamGameServer"/>
-      <class name="com.threerings.froth.SteamGameServerStats"/>
-      <class name="com.threerings.froth.SteamMatchmaking"/>
-      <class name="com.threerings.froth.SteamNetworking"/>
-      <class name="com.threerings.froth.SteamUser"/>
-      <class name="com.threerings.froth.SteamUtils"/>
-    </javah>
   </target>
 
   <property name="maven.deploy.repo" value="file://${user.home}/.m2/repository"/>
