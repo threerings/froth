@@ -22,11 +22,10 @@ Before building the native libraries, you have to download the Steamworks SDK an
 The version of the SDK is defined in the `steamworks.sdk` variable in `build.xml`. So if you're
 updating the SDK then update that value as well.
 
-Linux should be straightforward; it just needs GCC.  If running on a 64-bit installation, you will
-need to following 32-bit packages: libc6-dev-i386 g++-multilib
-
-Windows requires Visual Studio C++ 2010 Express (http://www.microsoft.com/express/Downloads/) and
-the Windows SDK (http://msdn.microsoft.com/en-us/windows/bb980924).  Run Ant from the SDK command
-prompt shortcut.
+Linux should be straightforward; it just needs GCC.
 
 OS X requires Clang.
+
+Windows requires Build Tools for Visual Studio 2022
+(https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022), install
+"Desktop development with C++". Only the MSVC compiler and Windows SDK are needed.
