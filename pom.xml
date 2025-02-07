@@ -4,7 +4,7 @@
   <groupId>com.threerings</groupId>
   <artifactId>froth</artifactId>
   <packaging>jar</packaging>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2</version>
   <name>froth</name>
   <description>Partial Java bindings for the Steam API.</description>
 
@@ -15,19 +15,6 @@
       <email>mjohnson@threerings.net</email>
     </developer>
   </developers>
-
-  <scm>
-    <developerConnection>
-      scm:svn:svn+ssh://src.earth.threerings.net/froth/trunk/
-    </developerConnection>
-  </scm>
-
-  <repositories>
-    <repository>
-      <id>ooo-maven-repo</id>
-      <url>http://ooo-maven.googlecode.com/hg/repository</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <dependency>
