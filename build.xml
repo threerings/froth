@@ -64,8 +64,8 @@
     <mkdir dir="${deploy.dir}/lib/MacOS"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
       <arg line="-m64 -fPIC -o lib/x86_64-Linux/libfroth.so -shared -Wl,--no-undefined"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/linux"/>
+      <arg value="-I${java.home}/include"/>
+      <arg value="-I${java.home}/include/linux"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
       <arg value="-L${deploy.dir}/sdk/redistributable_bin/linux64"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
