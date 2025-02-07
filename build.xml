@@ -1,6 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <project name="froth" default="compile" basedir="." xmlns:resolver="antlib:org.apache.maven.resolver.ant">
   <property name="steamworks.sdk" value="steamworks_sdk_161.zip"/>
+  <property name="vstudio.dir" value="c:\Program Files (x86)\Microsoft Visual Studio\2022"/>
 
   <property name="src.dir"      value="src/main/java"/>
   <property name="deploy.dir"   value="dist"/>
@@ -67,6 +68,7 @@
   <target name="nativecompile" depends="-unpack-sdk" description="Builds the native code.">
     <mkdir dir="${deploy.dir}/lib"/>
     <mkdir dir="${deploy.dir}/lib/MacOS"/>
+    <mkdir dir="${deploy.dir}/lib/Windows"/>
     <apply os="Linux" executable="g++" parallel="true" failonerror="true">
       <arg line="-m64 -fPIC -o lib/x86_64-Linux/libfroth.so -shared -Wl,--no-undefined"/>
       <arg value="-I${java.home}/include"/>
@@ -77,10 +79,11 @@
       <srcfile/>
       <arg value="-lsteam_api"/>
     </apply>
-    <apply osfamily="windows" executable="SetEnv.Cmd" parallel="true" failonerror="true">
-      <arg line="/x64 &amp;&amp; cl -Felib/x64_64-Windows/froth64.dll -LD"/>
-      <arg value="-I${java.home}/../include"/>
-      <arg value="-I${java.home}/../include/win64"/>
+    <apply osfamily="windows" executable="${vstudio.dir}\BuildTools\Common7\Tools\VsDevCmd.Bat" parallel="true" failonerror="true">
+      <arg line="-arch=amd64 &amp;&amp; cl -Felib/x86_64-Windows/froth64.dll -LD"/>
+      <arg value="-Fo${deploy.dir}/lib/Windows/"/>
+      <arg value="-I${java.home}/include"/>
+      <arg value="-I${java.home}/include/win32"/>
       <arg value="-I${deploy.dir}/sdk/public"/>
       <arg value="${deploy.dir}/sdk/redistributable_bin/win64/steam_api64.lib"/>
       <fileset dir="src/cpp" includes="*.cpp"/>
