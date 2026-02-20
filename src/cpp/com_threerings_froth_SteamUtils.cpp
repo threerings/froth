@@ -58,3 +58,10 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_nativeSetOverlayNoti
 {
     getUtils()->SetOverlayNotificationPosition((ENotificationPosition)position);
 }
+
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_nativeShowFloatingGamepadTextInput (
+    JNIEnv* env, jclass clazz, jint keyboardMode, jint x, jint y, jint w, jint h)
+{
+  return getUtils()->ShowFloatingGamepadTextInput((EFloatingGamepadTextInputMode)keyboardMode,
+      x, y, w, h);
+}

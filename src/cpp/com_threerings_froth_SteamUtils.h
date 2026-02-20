@@ -47,6 +47,14 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_overlayNeedsPres
 JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_nativeSetOverlayNotificationPosition
   (JNIEnv *, jclass, jint);
 
+/*
+ * Class:     com_threerings_froth_SteamUtils
+ * Method:    nativeShowFloatingGamepadTextInput
+ * Signature: (IIIII)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_nativeShowFloatingGamepadTextInput
+  (JNIEnv *, jclass, jint, jint, jint, jint, jint);
+
 #ifdef __cplusplus
 }
 #endif

@@ -8,8 +8,22 @@ package com.threerings.froth;
  */
 public class SteamUtils
 {
-	/** The available positions for overlay notifications. */
+    /** The available positions for overlay notifications. */
     public enum NotificationPosition { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT };
+
+    /** Controls the mode for the floating keyboard. */
+    public enum FloatingGamepadTextInputMode
+    {
+      /** Enter dismisses the keyboard */
+      SINGLE_LINE,
+      /** User needs to explicitly dismiss the keyboard */
+      MULTIPLE_LINES,
+      /** Keyboard is displayed in a special mode that makes it easier to enter emails */
+      EMAIL,
+      /** Numeric keypad is shown */
+      NUMERIC,
+      ;
+    }
 
     /**
      * Provides a means to obtain warning messages from the Steam API.
@@ -56,4 +70,24 @@ public class SteamUtils
      * The actual native overlay position set method.
      */
     protected static native void nativeSetOverlayNotificationPosition (int position);
+
+    /**
+     * Opens a floating keyboard over the game content and sends OS keyboard keys directly
+     * to the game. The text field position is specified in pixels relative the origin of the
+     * game window and is used to position the floating keyboard in a way that doesn't cover
+     * the text field.
+     *
+     * @returns true if the floating keyboard was shown, otherwise, false.
+     */
+    public static boolean showFloatingGamepadTextInput (
+      FloatingGamepadTextInputMode keyboardMode,
+      int textFieldXPosition, int textFieldYPosition, int textFieldWidth, int textFieldHeight)
+    {
+      return nativeShowFloatingGamepadTextInput(keyboardMode.ordinal(),
+          textFieldXPosition, textFieldYPosition, textFieldWidth, textFieldHeight);
+    }
+
+    protected static native boolean nativeShowFloatingGamepadTextInput (
+      int keyboardMode,
+      int textFieldXPosition, int textFieldYPosition, int textFieldWidth, int textFieldHeight);
 }
