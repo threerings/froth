@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <project name="froth" default="compile" basedir="." xmlns:resolver="antlib:org.apache.maven.resolver.ant">
-  <property name="steamworks.sdk" value="steamworks_sdk_161.zip"/>
+  <property name="steamworks.sdk" value="steamworks_sdk_163.zip"/>
   <property name="vstudio.dir" value="c:\Program Files (x86)\Microsoft Visual Studio\2022"/>
 
   <property name="src.dir"      value="src/main/java"/>
