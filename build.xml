@@ -105,28 +105,14 @@
     </apply>
   </target>
 
-  <target name="javadoc" depends="-prepare" description="Builds the Java documentation">
-    <mkdir dir="${deploy.dir}/docs"/>
-    <javadoc sourcepath="${src.dir}" packagenames="com.threerings.*"
-             destdir="${deploy.dir}/docs" stylesheetfile="docs/stylesheet.css"
-             additionalparam="-breakiterator">
-      <classpath refid="built.classpath"/>
-      <link href="http://java.sun.com/j2se/1.5/docs/api"/>
-    </javadoc>
-  </target>
-
-  <!-- a target for rebuilding everything -->
-  <target name="all" depends="clean,compile,javadoc,dist"/>
-
   <target name="dist" depends="compile" description="Builds jar files.">
     <jar destfile="${deploy.dir}/${ant.project.name}.jar">
       <fileset dir="${classes.dir}" includes="com/**"/>
     </jar>
   </target>
 
-  <property name="maven.deploy.repo" value="file://${basedir}/repo"/>
-  <target name="maven-deploy" depends="dist,-unpack-sdk"
-          description="Deploys our build artifacts to a Maven repository.">
+  <target name="distnatives" depends="nativecompile"
+          description="Builds and packages native libraries into jar files.">
     <copy todir="${deploy.dir}/natives">
       <fileset dir="lib" excludes="*.zip"/>
     </copy>
@@ -140,6 +126,11 @@
       <fileset dir="${deploy.dir}/sdk/redistributable_bin/osx" includes="*.dylib"/>
     </copy>
     <jar basedir="${deploy.dir}/natives" destfile="${deploy.dir}/${ant.project.name}-natives.jar"/>
+  </target>
+
+  <property name="maven.deploy.repo" value="file://${basedir}/repo"/>
+  <target name="maven-deploy" depends="dist,distnatives"
+          description="Deploys our build artifacts to a Maven repository.">
     <resolver:deploy>
       <artifact file="${deploy.dir}/${ant.project.name}.jar">
         <pom refid="pom"/>
