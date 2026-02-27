@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="yes"?>
 <project name="froth" default="compile" basedir="." xmlns:resolver="antlib:org.apache.maven.resolver.ant">
   <property name="steamworks.sdk" value="steamworks_sdk_163.zip"/>
-  <property name="vstudio.dir" value="c:\Program Files (x86)\Microsoft Visual Studio\2022"/>
+  <property name="vstudio.dir" value="c:\Program Files\Microsoft Visual Studio\18\Community\Common7\"/>
 
   <property name="src.dir"      value="src/main/java"/>
   <property name="deploy.dir"   value="dist"/>
@@ -79,7 +79,7 @@
       <srcfile/>
       <arg value="-lsteam_api"/>
     </apply>
-    <apply osfamily="windows" executable="${vstudio.dir}\BuildTools\Common7\Tools\VsDevCmd.Bat" parallel="true" failonerror="true">
+    <apply osfamily="windows" executable="${vstudio.dir}\Tools\VsDevCmd.Bat" parallel="true" failonerror="true">
       <arg line="-arch=amd64 &amp;&amp; cl -Felib/x86_64-Windows/froth64.dll -LD"/>
       <arg value="-Fo${deploy.dir}/lib/Windows/"/>
       <arg value="-I${java.home}/include"/>
