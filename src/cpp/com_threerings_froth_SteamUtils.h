@@ -55,6 +55,14 @@ JNIEXPORT void JNICALL Java_com_threerings_froth_SteamUtils_nativeSetOverlayNoti
 JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_nativeShowFloatingGamepadTextInput
   (JNIEnv *, jclass, jint, jint, jint, jint, jint);
 
+/*
+ * Class:     com_threerings_froth_SteamUtils
+ * Method:    isSteamRunningOnSteamDeck
+ * Signature: ()Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isSteamRunningOnSteamDeck
+  (JNIEnv *, jclass);
+
 #ifdef __cplusplus
 }
 #endif

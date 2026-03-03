@@ -65,3 +65,9 @@ JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_nativeShowFloati
   return getUtils()->ShowFloatingGamepadTextInput((EFloatingGamepadTextInputMode)keyboardMode,
       x, y, w, h);
 }
+
+JNIEXPORT jboolean JNICALL Java_com_threerings_froth_SteamUtils_isSteamRunningOnSteamDeck (
+    JNIEnv* env, jclass clazz)
+{
+    return getUtils()->IsSteamRunningOnSteamDeck();
+}

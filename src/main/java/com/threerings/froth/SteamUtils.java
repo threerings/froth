@@ -90,4 +90,11 @@ public class SteamUtils
     protected static native boolean nativeShowFloatingGamepadTextInput (
       int keyboardMode,
       int textFieldXPosition, int textFieldYPosition, int textFieldWidth, int textFieldHeight);
+
+    /**
+     * Checks whether Steam is running on a Steam Deck device.
+     *
+     * @returns true if the current device is a Steam Deck, otherwise false.
+     */
+    public static native boolean isSteamRunningOnSteamDeck ();
 }
