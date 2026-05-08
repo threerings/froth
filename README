@@ -8,13 +8,11 @@ Foreign Function and Memory API.
 - Version 0.2 is drop-in compatible with froth, modulo that the obsolete steam controller
   APIs have been removed.
 - For your pom.xml:
-```
   <dependency>
     <groupId>com.threerings</groupId>
     <artifactId>froth-foamy</artifactId>
     <version>0.2</version>
   </dependency>
-```
 
 
 The Froth library
